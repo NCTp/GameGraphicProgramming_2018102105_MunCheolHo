@@ -7,7 +7,7 @@ namespace library
     --------------------------------------------------------------------*/
     void PrintHi()
     {
-      OutputDebugString(L"hi\n");
+      OutputDebugString(L"hhhhi\n");
       MessageBox(nullptr, L"hi", L"Game Graphics Programming", MB_OK);
     }
 }
