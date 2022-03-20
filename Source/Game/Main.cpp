@@ -42,15 +42,17 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    if (FAILED(library::InitWindow(hInstance, nCmdShow)))
+    if (FAILED(library::InitWindow(hInstance, nCmdShow))) 
+    {
         return 0;
+    }
 
     if (FAILED(library::InitDevice()))
     {
         library::CleanupDevice();
         return 0;
     }
-
+    
     // Main message loop
     MSG msg = { 0 };
     while (WM_QUIT != msg.message)

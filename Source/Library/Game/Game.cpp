@@ -13,43 +13,26 @@ namespace library
     D3D_FEATURE_LEVEL       g_featureLevel = D3D_FEATURE_LEVEL_11_0;
 
     //Use Comptr, Dont use Comptr like Raw pointer. :)
-    Microsoft::WRL::ComPtr<ID3D11Device> g_pd3dDevice = nullptr;
-    Microsoft::WRL::ComPtr<ID3D11Device1> g_pd3dDevice1 = nullptr;
-    Microsoft::WRL::ComPtr<ID3D11DeviceContext> g_pImmediateContext = nullptr;
-    Microsoft::WRL::ComPtr<ID3D11DeviceContext1> g_pImmediateContext1 = nullptr;
-    Microsoft::WRL::ComPtr<IDXGISwapChain> g_pSwapChain = nullptr;
-    Microsoft::WRL::ComPtr<IDXGISwapChain1> g_pSwapChain1 = nullptr;
-    Microsoft::WRL::ComPtr<ID3D11RenderTargetView> g_pRenderTargetView = nullptr;
-    
-    
+    Microsoft::WRL::ComPtr<ID3D11Device> g_pd3dDevice;
+    Microsoft::WRL::ComPtr<ID3D11Device1> g_pd3dDevice1;
+    Microsoft::WRL::ComPtr<ID3D11DeviceContext> g_pImmediateContext;
+    Microsoft::WRL::ComPtr<ID3D11DeviceContext1> g_pImmediateContext1;
+    Microsoft::WRL::ComPtr<IDXGISwapChain> g_pSwapChain;
+    Microsoft::WRL::ComPtr<IDXGISwapChain1> g_pSwapChain1;
+    Microsoft::WRL::ComPtr<ID3D11RenderTargetView> g_pRenderTargetView;
+
+
     /*--------------------------------------------------------------------
       Forward declarations
     --------------------------------------------------------------------*/
-    
+
     HRESULT InitWindow(_In_ HINSTANCE hInstance, _In_ INT nCmdShow);
     HRESULT InitDevice();
     void CleanupDevice();
     LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam);
     void Render();
 
-    /*F+F+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      Function: WindowProc
 
-      Summary:  Defines the behavior of the window—its appearance, how
-                it interacts with the user, and so forth
-
-      Args:     HWND hWnd
-                  Handle to the window
-                UINT uMsg
-                  Message code
-                WPARAM wParam
-                  Additional data that pertains to the message
-                LPARAM lParam
-                  Additional data that pertains to the message
-
-      Returns:  LRESULT
-                  Integer value that your program returns to Windows
-    -----------------------------------------------------------------F-F*/
     LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
     {
         PAINTSTRUCT ps;
@@ -74,20 +57,6 @@ namespace library
         return 0;
     }
 
-    /*F+F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F
-      Function: InitWindow
-
-      Summary:  Registers the window class and creates a window
-
-      Args:     HINSTANCE hInstance
-                  Handle to the instance
-                INT nCmdShow
-                  Is a flag that says whether the main application window
-                  will be minimized, maximized, or shown normally
-
-        Returns:  HRESULT
-                    Status code
-    F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F-F*/
     HRESULT InitWindow(_In_ HINSTANCE hInstance, _In_ INT nCmdShow)
     {
         // Register class
@@ -123,22 +92,15 @@ namespace library
         return S_OK;
     }
 
-    /*F+F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F
-      Function: InitDevice
 
-      Summary:  Create Direct3D device and swap chain
-
-      Returns:  HRESULT
-                  Status code
-    F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F-F*/
     HRESULT InitDevice()
     {
         HRESULT hr = S_OK;
 
         RECT rc;
         GetClientRect(g_hWnd, &rc);
-        UINT width = rc.right - rc.left;
-        UINT height = rc.bottom - rc.top;
+        UINT width = (UINT)rc.right - (UINT)rc.left;
+        UINT height = (UINT)rc.bottom - (UINT)rc.top;
 
         UINT createDeviceFlags = 0;
 #ifdef _DEBUG
@@ -167,7 +129,7 @@ namespace library
             g_driverType = driverTypes[driverTypeIndex];
             hr = D3D11CreateDevice(nullptr, g_driverType, nullptr, createDeviceFlags, featureLevels, numFeatureLevels,
                 D3D11_SDK_VERSION, g_pd3dDevice.GetAddressOf(), &g_featureLevel, g_pImmediateContext.GetAddressOf());
-            
+
 
             if (hr == E_INVALIDARG)
             {
@@ -232,10 +194,10 @@ namespace library
             {
 
                 hr = g_pSwapChain1.As(&g_pSwapChain);
-                
+
             }
 
-            
+
         }
         else
         {
@@ -261,18 +223,28 @@ namespace library
 
         //dxgiFactory->Release();
 
-        if (FAILED(hr))
+        if (FAILED(hr)) 
+        {
             return hr;
+        }
 
         // Create a render target view
         Microsoft::WRL::ComPtr<ID3D11Texture2D> pBackBuffer;
         hr = g_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(pBackBuffer.GetAddressOf()));
-        if (FAILED(hr))
+
+        if (FAILED(hr)) 
+        {
             return hr;
+        }
+  
 
         hr = g_pd3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, g_pRenderTargetView.GetAddressOf());
-        if (FAILED(hr))
+        pBackBuffer.Reset();
+        if (FAILED(hr)) 
+        {
             return hr;
+        }
+
 
         g_pImmediateContext->OMSetRenderTargets(1, g_pRenderTargetView.GetAddressOf(), nullptr);
 
@@ -289,33 +261,26 @@ namespace library
         return S_OK;
     }
 
-    /*F+F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F
-      Function: CleanupDevice
-
-      Summary:  Clean up the objects we've created
-    F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F-F*/
-    void CleanupDevice()
-    {
-        if (g_pImmediateContext) g_pImmediateContext->ClearState();
-
-        if (g_pRenderTargetView) g_pRenderTargetView->Release();
-        if (g_pSwapChain1) g_pSwapChain1->Release();
-        if (g_pSwapChain) g_pSwapChain->Release();
-        if (g_pImmediateContext1) g_pImmediateContext1->Release();
-        if (g_pImmediateContext) g_pImmediateContext->Release();
-        if (g_pd3dDevice1) g_pd3dDevice1->Release();
-        if (g_pd3dDevice) g_pd3dDevice->Release();
-    }
-
-    /*F+F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F+++F
-      Function: Render
-
-      Summary:  Render the frame
-    F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F---F-F*/
     void Render()
     {
         // Just clear the backbuffer
         g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView.Get(), Colors::MidnightBlue);
         g_pSwapChain->Present(0, 0);
     }
+
+
+    void CleanupDevice()
+    {
+        if (g_pImmediateContext) g_pImmediateContext->ClearState();
+
+        //if (g_pRenderTargetView) g_pRenderTargetView->Release();
+        //if (g_pSwapChain1) g_pSwapChain1->Release();
+        //if (g_pSwapChain) g_pSwapChain->Release();
+        //if (g_pImmediateContext1) g_pImmediateContext1->Release();
+        //if (g_pImmediateContext) g_pImmediateContext->Release();
+        //if (g_pd3dDevice1) g_pd3dDevice1->Release();
+        //if (g_pd3dDevice) g_pd3dDevice->Release();
+    }
 }
+
+    
