@@ -32,7 +32,6 @@ namespace library
     LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam);
     void Render();
 
-
     /*F+F+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       Function: WindowProc
 
