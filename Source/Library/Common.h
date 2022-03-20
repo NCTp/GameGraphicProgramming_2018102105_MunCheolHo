@@ -17,6 +17,8 @@
 
 #include <windows.h>
 
+#include<wrl.h>
+
 #include <d3d11_4.h>
 #include <directxcolors.h>
 
