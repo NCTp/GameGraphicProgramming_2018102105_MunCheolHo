@@ -99,8 +99,8 @@ namespace library
 
         RECT rc;
         GetClientRect(g_hWnd, &rc);
-        UINT width = (UINT)rc.right - (UINT)rc.left;
-        UINT height = (UINT)rc.bottom - (UINT)rc.top;
+        UINT width = rc.right - rc.left;
+        UINT height = rc.bottom - rc.top;
 
         UINT createDeviceFlags = 0;
 #ifdef _DEBUG
@@ -197,7 +197,6 @@ namespace library
 
             }
 
-
         }
         else
         {
@@ -221,7 +220,6 @@ namespace library
         // Note this tutorial doesn't handle full-screen swapchains so we block the ALT+ENTER shortcut
         dxgiFactory->MakeWindowAssociation(g_hWnd, DXGI_MWA_NO_ALT_ENTER);
 
-        //dxgiFactory->Release();
 
         if (FAILED(hr)) 
         {
@@ -272,14 +270,14 @@ namespace library
     void CleanupDevice()
     {
         if (g_pImmediateContext) g_pImmediateContext->ClearState();
-
-        //if (g_pRenderTargetView) g_pRenderTargetView->Release();
-        //if (g_pSwapChain1) g_pSwapChain1->Release();
-        //if (g_pSwapChain) g_pSwapChain->Release();
-        //if (g_pImmediateContext1) g_pImmediateContext1->Release();
-        //if (g_pImmediateContext) g_pImmediateContext->Release();
-        //if (g_pd3dDevice1) g_pd3dDevice1->Release();
-        //if (g_pd3dDevice) g_pd3dDevice->Release();
+        //No release, Reset!!
+        if (g_pRenderTargetView) g_pRenderTargetView.Reset();
+        if (g_pSwapChain1) g_pSwapChain1.Reset();
+        if (g_pSwapChain) g_pSwapChain.Reset();
+        if (g_pImmediateContext1) g_pImmediateContext1.Reset();
+        if (g_pImmediateContext) g_pImmediateContext.Reset();
+        if (g_pd3dDevice1) g_pd3dDevice1.Reset();
+        if (g_pd3dDevice) g_pd3dDevice.Reset();
     }
 }
 
