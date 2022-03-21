@@ -12,7 +12,6 @@ namespace library
     D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_NULL;
     D3D_FEATURE_LEVEL       g_featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-    //Use Comptr, Dont use Comptr like Raw pointer. :)
     Microsoft::WRL::ComPtr<ID3D11Device> g_pd3dDevice;
     Microsoft::WRL::ComPtr<ID3D11Device1> g_pd3dDevice1;
     Microsoft::WRL::ComPtr<ID3D11DeviceContext> g_pImmediateContext;
@@ -31,7 +30,6 @@ namespace library
     void CleanupDevice();
     LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam);
     void Render();
-
 
     LRESULT CALLBACK WindowProc(_In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
     {
@@ -91,7 +89,6 @@ namespace library
 
         return S_OK;
     }
-
 
     HRESULT InitDevice()
     {
@@ -270,7 +267,7 @@ namespace library
     void CleanupDevice()
     {
         if (g_pImmediateContext) g_pImmediateContext->ClearState();
-        //No release, Reset!!
+
         if (g_pRenderTargetView) g_pRenderTargetView.Reset();
         if (g_pSwapChain1) g_pSwapChain1.Reset();
         if (g_pSwapChain) g_pSwapChain.Reset();
