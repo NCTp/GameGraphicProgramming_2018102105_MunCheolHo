@@ -12,9 +12,7 @@ namespace library
 
 	  Modifies: [m_pszGameName, m_mainWindow, m_renderer].
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	/*--------------------------------------------------------------------
-	  TODO: Game::Game definition (remove the comment)
-	--------------------------------------------------------------------*/
+
 	Game::Game(_In_ PCWSTR pszGameName) {
 		m_pszGameName = pszGameName;
 		m_mainWindow = nullptr;
@@ -37,9 +35,7 @@ namespace library
 	  Returns:  HRESULT
 				Status code
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	/*--------------------------------------------------------------------
-	  TODO: Game::Initialize definition (remove the comment)
-	--------------------------------------------------------------------*/
+
 	HRESULT library::Game::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow) {
 		HRESULT hr;
 
@@ -66,9 +62,7 @@ namespace library
 	  Returns:  INT
 				  Status code to return to the operating system
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	/*--------------------------------------------------------------------
-	  TODO: Game::Run definition (remove the comment)
-	--------------------------------------------------------------------*/
+
 	INT Game::Run() {
 		MSG msg = {};
 
@@ -96,9 +90,7 @@ namespace library
 	  Returns:  PCWSTR
 				  Name of the game
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	/*--------------------------------------------------------------------
-	  TODO: Game::GetGameName definition (remove the comment)
-	--------------------------------------------------------------------*/
+
 	PCWSTR Game::GetGameName() const {
 		return m_pszGameName;
 	}
