@@ -15,6 +15,11 @@ namespace library
 	/*--------------------------------------------------------------------
 	  TODO: Game::Game definition (remove the comment)
 	--------------------------------------------------------------------*/
+	Game::Game(_In_ PCWSTR pszGameName) {
+		m_pszGameName = pszGameName;
+		m_mainWindow = nullptr;
+		m_renderer = nullptr;
+	}
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::Initialize
@@ -35,6 +40,23 @@ namespace library
 	/*--------------------------------------------------------------------
 	  TODO: Game::Initialize definition (remove the comment)
 	--------------------------------------------------------------------*/
+	HRESULT library::Game::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow) {
+		HRESULT hr;
+
+		m_mainWindow = std::make_unique<MainWindow>();
+		hr = m_mainWindow->Initialize(hInstance, nCmdShow, L"Game Graphics Programming Lab 02: Object Oriented Design");
+
+		if (FAILED(hr)) 
+			return hr;
+
+		m_renderer = std::make_unique<Renderer>();
+		hr = m_renderer->Initialize(m_mainWindow->GetWindow());
+
+		if (FAILED(hr)) 
+			return hr;
+
+		return S_OK;
+	}
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::Run
@@ -47,6 +69,24 @@ namespace library
 	/*--------------------------------------------------------------------
 	  TODO: Game::Run definition (remove the comment)
 	--------------------------------------------------------------------*/
+	INT Game::Run() {
+		MSG msg = {};
+
+		while (WM_QUIT != msg.message)
+		{
+			if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			else
+			{
+				m_renderer->Render();
+			}
+		}
+
+		return static_cast<INT>(msg.wParam);
+	}
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetGameName
@@ -59,5 +99,8 @@ namespace library
 	/*--------------------------------------------------------------------
 	  TODO: Game::GetGameName definition (remove the comment)
 	--------------------------------------------------------------------*/
+	PCWSTR Game::GetGameName() const {
+		return m_pszGameName;
+	}
 
 }

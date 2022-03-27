@@ -21,7 +21,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: MainWindow::Initialize definition (remove the comment)
     --------------------------------------------------------------------*/
-
+    HRESULT MainWindow::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow, _In_ PCWSTR pszWindowName) {
+        return initialize(hInstance, nCmdShow, pszWindowName, WS_OVERLAPPEDWINDOW);
+    }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   MainWindow::GetWindowClassName
 
@@ -33,7 +35,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: MainWindow::GetWindowClassName definition (remove the comment)
     --------------------------------------------------------------------*/
-
+    PCWSTR MainWindow::GetWindowClassName() const {
+        return L"MainWindow";
+    }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   MainWindow::HandleMessage
 
@@ -52,4 +56,26 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: MainWindow::HandleMessage definition (remove the comment)
     --------------------------------------------------------------------*/
+    LRESULT MainWindow::HandleMessage(_In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam) {
+        PAINTSTRUCT ps;
+        HDC hdc;
+        switch (uMsg)
+        {
+        case WM_PAINT:
+            hdc = BeginPaint(m_hWnd, &ps);
+            FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+            EndPaint(m_hWnd, &ps);
+            break;
+
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            break;
+
+
+        default:
+            return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
+        }
+
+        return 0;
+    }
 }

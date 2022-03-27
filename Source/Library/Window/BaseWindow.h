@@ -24,10 +24,10 @@ namespace library
                 Initialize
                     Purely virtual function that initializes window
                 GetWindowClassName
-                    Purely virtual function that returns the name of 
+                    Purely virtual function that returns the name of
                     the window class
                 HandleMessage
-                    Purely virtual function that that handles the 
+                    Purely virtual function that that handles the
                     messages
                 GetWindow
                     Getter for the handle to the window
@@ -97,6 +97,32 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: BaseWindow<DerivedType>::WindowProc definition (remove the comment)
     --------------------------------------------------------------------*/
+    template <class DerivedType>
+    LRESULT CALLBACK BaseWindow<DerivedType>::WindowProc(_In_ HWND hWnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
+    {
+        DerivedType* pState = nullptr;
+
+        if (uMsg == WM_NCCREATE)
+        {
+            CREATESTRUCT* pCreate = (CREATESTRUCT*)(lParam);
+            pState = (DerivedType*)(pCreate->lpCreateParams);
+            SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)(pState));
+            pState->m_hWnd = hWnd;
+        }
+        else
+        {
+            //LONG_PTR ptr = GetWindowLongPtr(hWnd, GWLP_USERDATA);
+            pState = (DerivedType*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+        }
+        if (pState)
+        {
+            return pState->HandleMessage(uMsg, wParam, lParam);
+        }
+        else
+        {
+            return DefWindowProc(hWnd, uMsg, wParam, lParam);
+        }
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
         Method:   BaseWindow<DerivedType>::BaseWindow
@@ -105,10 +131,17 @@ namespace library
 
         Modifies: [m_hInstance, m_hWnd, m_pszWindowName].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+
     /*--------------------------------------------------------------------
       TODO: BaseWindow<DerivedType>::BaseWindow definition (remove the comment)
     --------------------------------------------------------------------*/
+    template <class DerivedType>
+    BaseWindow<DerivedType>::BaseWindow() {
+        m_hInstance = nullptr;
+        m_hWnd = nullptr;
+        m_pszWindowName = nullptr;
 
+    }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
         Method:   BaseWindow<DerivedType>::GetWindow()
 
@@ -120,6 +153,12 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: BaseWindow<DerivedType>::GetWindow definition (remove the comment)
     --------------------------------------------------------------------*/
+    template <class DerivedType>
+    HWND BaseWindow<DerivedType>::GetWindow() const {
+        return m_hWnd;
+
+    }
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   BaseWindow<DerivedType>::initialize
@@ -147,7 +186,7 @@ namespace library
                   A handle to the parent or owner window of the window
                   being created
                 HMENU hMenu
-                  A handle to a menu, or specifies a child-window 
+                  A handle to a menu, or specifies a child-window
                   identifier depending on the window style
 
       Modifies: [m_hInstance, m_pszWindowName, m_hWnd].
@@ -158,4 +197,57 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: BaseWindow<DerivedType>::initialize definition (remove the comment)
     --------------------------------------------------------------------*/
+    template<class DerivedType>
+    HRESULT BaseWindow<DerivedType>::initialize(HINSTANCE hInstance, INT nCmdShow, PCWSTR pszWindowName, DWORD dwStyle, INT x, INT y, INT nWidth, INT nHeight, HWND hWndParent, HMENU hMenu)
+    {
+
+        // Register Class
+        WNDCLASS wc = {};
+
+        wc.lpfnWndProc = DerivedType::WindowProc;
+        wc.hInstance = hInstance;
+        wc.lpszClassName = GetWindowClassName();
+        wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+
+        //RegisterClass(&wc);
+
+        if (!RegisterClass(&wc))
+            return E_FAIL;
+
+        // Create Window
+        m_hInstance = hInstance;
+        m_pszWindowName = pszWindowName;
+        
+        RECT rc = { 0, 0, 800, 600 };
+        AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+        m_hWnd = CreateWindowEx(
+            0,									// Optional window styles.
+            GetWindowClassName(),			// Window class
+            pszWindowName,						// Window text
+            dwStyle,							// Window style
+
+            // Size and position
+            0, 0, (rc.right - rc.left), (rc.bottom - rc.top),
+
+            hWndParent,		// Parent window    
+            hMenu,			// Menu
+            hInstance,		// Instance handle
+            this			// Additional application data
+        );
+
+        if (!m_hWnd)
+        {
+            return E_FAIL;
+        }
+
+        // Shows the window
+        ShowWindow(m_hWnd, nCmdShow);
+
+        // Returns a result code of HRESULT type
+        return S_OK;
+    }
+        
+
+    
 }
