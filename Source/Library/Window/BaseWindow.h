@@ -210,17 +210,17 @@ namespace library
         m_hInstance = hInstance;
         m_pszWindowName = pszWindowName;
         
-        RECT rc = { 0, 0, 800, 600 };
+        RECT rc = { x, y, nWidth, nHeight };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
         m_hWnd = CreateWindowEx(
             0,									// Optional window styles.
             GetWindowClassName(),			// Window class
             pszWindowName,						// Window text
-            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,// Window style
+            dwStyle,// Window style
 
             // Size and position
-            0, 0, (rc.right - rc.left), (rc.bottom - rc.top),
+            x,y,nWidth,nHeight,
 
             hWndParent,		// Parent window    
             hMenu,			// Menu

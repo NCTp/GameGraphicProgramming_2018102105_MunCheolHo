@@ -20,7 +20,19 @@ namespace library
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 
     HRESULT MainWindow::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow, _In_ PCWSTR pszWindowName) {
-        return initialize(hInstance, nCmdShow, pszWindowName, WS_OVERLAPPEDWINDOW);
+        HRESULT hr = initialize(
+            hInstance, 
+            nCmdShow, 
+            pszWindowName,
+            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+
+            0,0,800,600,
+            nullptr,
+            nullptr);
+        if (FAILED(hr))
+            return 0;
+
+        return hr;
     }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   MainWindow::GetWindowClassName
