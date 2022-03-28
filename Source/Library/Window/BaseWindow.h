@@ -217,7 +217,7 @@ namespace library
             0,									// Optional window styles.
             GetWindowClassName(),			// Window class
             pszWindowName,						// Window text
-            dwStyle,							// Window style
+            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,// Window style
 
             // Size and position
             0, 0, (rc.right - rc.left), (rc.bottom - rc.top),
