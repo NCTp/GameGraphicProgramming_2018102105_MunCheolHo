@@ -1,5 +1,5 @@
 #include "Renderer/Renderer.h"
-#include <d3dcompiler.h>
+
 namespace library {
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Renderer::Renderer
@@ -51,8 +51,10 @@ namespace library {
 		// from the API default. It is required for compatibility with Direct2D.
 		UINT deviceFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 		const D3D_FEATURE_LEVEL featureLevels[] = {
-			D3D_FEATURE_LEVEL_11_1,
-			D3D_FEATURE_LEVEL_11_0
+			D3D_FEATURE_LEVEL_11_1, D3D_FEATURE_LEVEL_11_0,
+	        D3D_FEATURE_LEVEL_10_1, D3D_FEATURE_LEVEL_10_0,
+	        D3D_FEATURE_LEVEL_9_3, D3D_FEATURE_LEVEL_9_2, 
+			D3D_FEATURE_LEVEL_9_1
 		};
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -70,7 +72,7 @@ namespace library {
 			&m_featureLevel,						// Returns feature level of device created.
 			&m_immediateContext						// Returns the device immediate context.
 		);
-		if (FAILED(hr)) return hr;
+		if (FAILED(hr)) return E_FAIL;
 
 		m_d3dDevice.As(&m_d3dDevice1);
 		m_immediateContext.As(&m_immediateContext1);
@@ -80,7 +82,7 @@ namespace library {
 #pragma region CreateSwapChain
 
 		DXGI_SWAP_CHAIN_DESC desc = {
-			
+
 			.BufferDesc{
 				.Format = DXGI_FORMAT_B8G8R8A8_UNORM
 				},
@@ -107,17 +109,17 @@ namespace library {
 		ComPtr<IDXGIFactory> pFactory;
 
 		hr = pDxgiDevice->GetAdapter(&pAdapter);
-		if (FAILED(hr)) return hr;
+		if (FAILED(hr)) return E_FAIL;
 
 		hr = pAdapter->GetParent(IID_PPV_ARGS(&pFactory));
-		if (FAILED(hr)) return hr;
+		if (FAILED(hr)) return E_FAIL;
 
 		hr = pFactory->CreateSwapChain(
 			m_d3dDevice.Get(),
 			&desc,
 			&m_swapChain
 		);
-		if (FAILED(hr)) return hr;
+		if (FAILED(hr)) return E_FAIL;
 
 		m_swapChain.As(&m_swapChain1);
 
@@ -132,14 +134,14 @@ namespace library {
 			0,
 			__uuidof(ID3D11Texture2D),
 			&pBackBuffer);
-		if (FAILED(hr)) return hr;
+		if (FAILED(hr)) return E_FAIL;
 
 		hr = m_d3dDevice->CreateRenderTargetView(
 			pBackBuffer.Get(),
 			nullptr,
 			&m_renderTargetView
 		);
-		if (FAILED(hr)) return hr;
+		if (FAILED(hr)) return E_FAIL;
 
 		m_immediateContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), nullptr);
 
@@ -316,7 +318,7 @@ namespace library {
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 	HRESULT Renderer::compileShaderFromFile(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR szShaderModel, _Outptr_ ID3DBlob** ppBlobOut)
 	{
-		
+
 
 		UINT flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
