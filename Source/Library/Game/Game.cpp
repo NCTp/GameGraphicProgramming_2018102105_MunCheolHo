@@ -90,7 +90,6 @@ namespace library
 	  Returns:  PCWSTR
 				  Name of the game
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-
 	PCWSTR Game::GetGameName() const {
 		return m_pszGameName;
 	}

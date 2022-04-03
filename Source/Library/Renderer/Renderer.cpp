@@ -206,20 +206,19 @@ namespace library {
 		hr = compileShaderFromFile(L"../Library/Shaders/Lab03.fxh", "PS", "ps_5_0", &psBlob);
 		if (FAILED(hr)) return E_FAIL;
 
-		//printf("Success\n");
+
 
 		// Define the input layout
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			//{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			//{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			
 		};
 		UINT numElements = ARRAYSIZE(layout);
 
 		// Create the input layout
 		hr = m_d3dDevice->CreateInputLayout(layout, numElements, vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &m_vertexLayout);
-		if (FAILED(hr)) return hr; //FALSE -> hr
+		if (FAILED(hr)) return hr; 
 
 		// Set the input layout
 		m_immediateContext->IASetInputLayout(m_vertexLayout.Get());
@@ -331,7 +330,6 @@ namespace library {
 			NULL, NULL
 		};
 
-		//ComPtr<ID3DBlob> shaderBlob = nullptr;
 		ComPtr<ID3DBlob> errorBlob = nullptr;
 
 		HRESULT hr = D3DCompileFromFile(pszFileName, defines, D3D_COMPILE_STANDARD_FILE_INCLUDE,
@@ -343,7 +341,7 @@ namespace library {
 			if (errorBlob)
 			{
 				OutputDebugStringA((char*)errorBlob->GetBufferPointer());
-				//errorBlob->Release();
+				
 			}
 			return hr;
 		}
