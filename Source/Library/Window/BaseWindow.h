@@ -1,11 +1,8 @@
 /*+===================================================================
   File:      BASEWINDOW.H
-
-  Summary:   BaseWindow header file contains declarations of the 
+  Summary:   BaseWindow header file contains declarations of the
              base class of all windows used in the library.
-
   Classes: BaseWindow<DerivedType>
-
   © 2022 Kyung Hee University
 ===================================================================+*/
 #pragma once
