@@ -40,7 +40,7 @@ namespace library
 		HRESULT hr;
 
 		m_mainWindow = std::make_unique<MainWindow>();
-		hr = m_mainWindow->Initialize(hInstance, nCmdShow, L"Game Graphics Programming Lab 02: Object Oriented Design");
+		hr = m_mainWindow->Initialize(hInstance, nCmdShow, L"Game Graphics Programming Lab 03: Rendering a Triangle");
 
 		if (FAILED(hr)) 
 			return hr;
