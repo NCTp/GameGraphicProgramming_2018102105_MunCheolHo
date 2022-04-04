@@ -231,9 +231,9 @@ namespace library {
 		// Create vertex buffer
 		SimpleVertex vertices[] = {
 
-			XMFLOAT3(0.0f, 0.5f, 0.5f),
-			XMFLOAT3(0.5f, -0.5f, 0.5f),
-			XMFLOAT3(-0.5f, -0.5f, 0.5f),
+			{XMFLOAT3(0.0f, 0.5f, 0.5f)},
+			{XMFLOAT3(0.5f, -0.5f, 0.5f)},
+			{XMFLOAT3(-0.5f, -0.5f, 0.5f)},
 		};
 
 		D3D11_BUFFER_DESC bd = {
@@ -326,8 +326,8 @@ namespace library {
 
 		const D3D_SHADER_MACRO defines[] =
 		{
-			"EXAMPLE_DEFINE", "1",
-			NULL, NULL
+			{"EXAMPLE_DEFINE"}, {"1"},
+			{NULL}, {NULL}
 		};
 
 		ComPtr<ID3DBlob> errorBlob = nullptr;
