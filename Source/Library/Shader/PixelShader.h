@@ -31,6 +31,7 @@ namespace library
                 ~Game
                   Destructor.
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
+
     class PixelShader : public Shader
     {
     public:

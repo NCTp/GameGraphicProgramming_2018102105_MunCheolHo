@@ -50,6 +50,7 @@ namespace library
                 ~Renderer
                   Destructor.
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
+
     class Renderer final
     {
     public:

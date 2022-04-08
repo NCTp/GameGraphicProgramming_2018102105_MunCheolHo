@@ -48,6 +48,7 @@ namespace library
                 ~Renderable
                   Destructor.
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
+
     class Renderable
     {
     public:

@@ -64,6 +64,7 @@ namespace library
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 
 	INT Game::Run() {
+
 		MSG msg = { 0 };
 
 		while (WM_QUIT != msg.message)
@@ -93,6 +94,7 @@ namespace library
 	PCWSTR Game::GetGameName() const {
 		return m_pszGameName;
 	}
+
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetWindow
 
