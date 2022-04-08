@@ -35,13 +35,6 @@
     <ClCompile Include="Shader\VertexShader.cpp" />
     <ClCompile Include="Window\MainWindow.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\Lab03.fxh" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\Lab03_PS.hlsl" />
-    <FxCompile Include="Shaders\Lab03_VS.hlsl" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

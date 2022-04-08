@@ -1,4 +1,4 @@
-#include "Renderer/Renderable.h"
+﻿#include "Renderer/Renderable.h"
 
 namespace library
 {
@@ -22,6 +22,66 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::initialize definition (remove the comment)
     --------------------------------------------------------------------*/
+    HRESULT Renderable::Initialize(_In_ ID3D11Device* pDevice, _In_ ID3D11DeviceContext* pImmediateContext) {
+
+        HRESULT hr = S_OK;
+
+        // Create the vertex buffer
+        D3D11_BUFFER_DESC bd = {
+        .ByteWidth = sizeof(SimpleVertex) * GetNumVertices(),
+        .Usage = D3D11_USAGE_DEFAULT,
+        .BindFlags = D3D11_BIND_VERTEX_BUFFER,
+        .CPUAccessFlags = 0,
+        };
+
+        D3D11_SUBRESOURCE_DATA vbInitData = {
+            .pSysMem = getVertices()
+        };
+        
+        hr = pDevice->CreateBuffer(&bd, &vbInitData, m_vertexBuffer.GetAddressOf());
+        if (FAILED(hr))
+            return hr;
+
+        // Create the index buffer
+        bd.Usage = D3D11_USAGE_DEFAULT;
+        bd.ByteWidth = sizeof(WORD) * GetNumIndices();
+        bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+        bd.CPUAccessFlags = 0;
+        bd.MiscFlags = 0;
+        bd.StructureByteStride = 0;
+
+        D3D11_SUBRESOURCE_DATA ibInitdata = {
+            .pSysMem = getIndices()
+        };
+
+        hr = pDevice->CreateBuffer(&bd, &ibInitdata, m_indexBuffer.GetAddressOf());
+        if (FAILED(hr))
+            return hr;
+
+        // Create the constant buffer
+        bd.Usage = D3D11_USAGE_DEFAULT;
+        bd.ByteWidth = sizeof(ConstantBuffer);
+        bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+        bd.CPUAccessFlags = 0;
+
+        D3D11_SUBRESOURCE_DATA cbInitdata = {
+            .pSysMem = getIndices()
+        };
+
+        hr = pDevice->CreateBuffer(&bd, &cbInitdata, m_constantBuffer.GetAddressOf());
+        if (FAILED(hr))
+            return hr;
+
+        // Initialize the world matrix
+        ConstantBuffer cb;
+
+        cb.World = XMMatrixIdentity();
+
+        return hr;
+    }
+
+
+   
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::SetVertexShader
@@ -37,7 +97,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::SetVertexShader definition (remove the comment)
     --------------------------------------------------------------------*/
-
+    void Renderable::SetVertexShader(const std::shared_ptr<VertexShader>& vertexShader){
+        m_vertexShader = vertexShader;
+    }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::SetPixelShader
 
@@ -52,6 +114,10 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::SetPixelShader definition (remove the comment)
     --------------------------------------------------------------------*/
+    void Renderable::SetPixelShader(const std::shared_ptr<PixelShader>& pixelShader){
+        m_pixelShader = pixelShader;
+
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetVertexShader
@@ -64,6 +130,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetVertexShader definition (remove the comment)
     --------------------------------------------------------------------*/
+    ComPtr<ID3D11VertexShader>& Renderable::GetVertexShader(){
+        return m_vertexShader->GetVertexShader();;
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetPixelShader
@@ -76,7 +145,10 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetPixelShader definition (remove the comment)
     --------------------------------------------------------------------*/
-
+    ComPtr<ID3D11PixelShader>& Renderable::GetPixelShader(){
+        return m_pixelShader->GetPixelShader();
+    }
+    
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetVertexLayout
 
@@ -88,7 +160,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetVertexLayout definition (remove the comment)
     --------------------------------------------------------------------*/
-
+    ComPtr<ID3D11InputLayout>& Renderable::GetVertexLayout(){
+        return m_vertexShader->GetVertexLayout();
+    }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetVertexBuffer
 
@@ -100,7 +174,10 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetVertexBuffer definition (remove the comment)
     --------------------------------------------------------------------*/
-
+    ComPtr<ID3D11Buffer>& Renderable::GetVertexBuffer(){
+        return m_vertexBuffer;
+    }
+    
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetIndexBuffer
 
@@ -112,6 +189,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetIndexBuffer definition (remove the comment)
     --------------------------------------------------------------------*/
+    ComPtr<ID3D11Buffer>& Renderable::GetIndexBuffer(){
+        return m_indexBuffer;
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetConstantBuffer
@@ -124,8 +204,12 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetConstantBuffer definition (remove the comment)
     --------------------------------------------------------------------*/
+    ComPtr<ID3D11Buffer>& Renderable::GetConstantBuffer(){
+        return m_constantBuffer;
+    }
 
-    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+
+/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderable::GetWorldMatrix
 
       Summary:  Returns the world matrix
@@ -136,4 +220,7 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Renderable::GetWorldMatrix definition (remove the comment)
     --------------------------------------------------------------------*/
+    const XMMATRIX& Renderable::GetWorldMatrix() const{
+        return m_world;
+    }
 }
