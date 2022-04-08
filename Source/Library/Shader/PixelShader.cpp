@@ -21,6 +21,11 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: PixelShader::PixelShader definition (remove the comment)
     --------------------------------------------------------------------*/
+    PixelShader::PixelShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel) :
+        Shader::Shader(pszFileName, pszEntryPoint, pszShaderModel),
+        m_pixelShader(nullptr)
+    {};
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   PixelShader::Initialize
@@ -36,6 +41,29 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: PixelShader::Initialize definition (remove the comment)
     --------------------------------------------------------------------*/
+    HRESULT PixelShader::Initialize(ID3D11Device* pDevice)
+    {
+        HRESULT hr = S_OK;
+        ComPtr<ID3DBlob> vs_blob_ptr = nullptr;
+
+        hr = compile(vs_blob_ptr.GetAddressOf());
+        if (FAILED(hr))
+        {
+            MessageBox(nullptr,
+                L"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", L"Error", MB_OK);
+            return hr;
+        }
+
+        // Create the pixel shader
+        hr = pDevice->CreatePixelShader(vs_blob_ptr->GetBufferPointer(), vs_blob_ptr->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
+        //pPSBlob->Release();
+        if (FAILED(hr))
+            return hr;
+
+
+        return S_OK;
+    }
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   PixelShader::GetPixelShader
@@ -48,4 +76,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: PixelShader::GetPixelShader definition (remove the comment)
     --------------------------------------------------------------------*/
+    ComPtr<ID3D11PixelShader>& PixelShader::GetPixelShader()
+    {
+        return m_pixelShader;
+    }
+    
 }

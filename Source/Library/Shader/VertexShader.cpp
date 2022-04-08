@@ -21,6 +21,15 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: VertexShader::VertexShader definition (remove the comment)
     --------------------------------------------------------------------*/
+    VertexShader::VertexShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel) :
+        Shader::Shader(pszFileName,pszEntryPoint,pszShaderModel),
+        m_vertexShader(nullptr),
+        m_vertexLayout(nullptr)
+        
+
+
+    {};
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   VertexShader::Initialize
@@ -36,6 +45,48 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: VertexShader::Initialize definition (remove the comment)
     --------------------------------------------------------------------*/
+    HRESULT VertexShader::Initialize(_In_ ID3D11Device* pDevice) {
+        HRESULT hr = S_OK;
+
+
+        // Compile the vertex shader
+        ComPtr<ID3DBlob> vs_blob_ptr = nullptr;
+        hr = compile(vs_blob_ptr.GetAddressOf());
+        if (FAILED(hr))
+        {
+            MessageBox(nullptr,
+                L"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", L"Error", MB_OK);
+            return hr;
+        }
+
+        // Create the vertex shader
+        hr = pDevice->CreateVertexShader(vs_blob_ptr->GetBufferPointer(), vs_blob_ptr->GetBufferSize(), nullptr, m_vertexShader.GetAddressOf());
+        if (FAILED(hr))
+        {
+            //vs_blob_ptr->Release();
+            return hr;
+        }
+
+        // Define the input layout
+        D3D11_INPUT_ELEMENT_DESC layout[] =
+        {
+            { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+            { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        };
+        UINT numElements = ARRAYSIZE(layout);
+
+        // Create the input layout
+        hr = pDevice->CreateInputLayout(layout, numElements, vs_blob_ptr->GetBufferPointer(),
+            vs_blob_ptr->GetBufferSize(), m_vertexLayout.GetAddressOf());
+        //pVSBlob->Release();
+        if (FAILED(hr))
+            return hr;
+
+        // Set the input layout
+        // g_pImmediateContext->IASetInputLayout(g_pVertexLayout);
+
+    }
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   VertexShader::GetVertexShader
@@ -48,6 +99,9 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: VertexShader::GetVertexShader definition (remove the comment)
     --------------------------------------------------------------------*/
+    ComPtr<ID3D11VertexShader>& VertexShader::GetVertexShader() {
+        return m_vertexShader;
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   VertexShader::GetVertexLayout
@@ -60,4 +114,7 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: VertexShader::GetVertexLayout definition (remove the comment)
     --------------------------------------------------------------------*/
+    ComPtr<ID3D11InputLayout>& VertexShader::GetVertexLayout() {
+        return m_vertexLayout;
+    }
 }

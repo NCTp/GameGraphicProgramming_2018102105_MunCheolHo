@@ -66,6 +66,14 @@ namespace library
 	INT Game::Run() {
 
 		MSG msg = { 0 };
+		LARGE_INTEGER startingTime, endingTime;
+		LARGE_INTEGER frequency;
+
+		float elapsedTime;
+
+		QueryPerformanceCounter(&startingTime);
+		QueryPerformanceFrequency(&frequency);
+
 
 		while (WM_QUIT != msg.message)
 		{
@@ -76,6 +84,13 @@ namespace library
 			}
 			else
 			{
+				//Update the elapsedTime
+				QueryPerformanceCounter(&endingTime);
+				elapsedTime = (float)(endingTime.QuadPart - startingTime.QuadPart);
+				elapsedTime /= (float)(frequency.QuadPart);
+
+				//Update and render
+				m_renderer->Update(elapsedTime);
 				m_renderer->Render();
 			}
 		}
@@ -103,9 +118,10 @@ namespace library
 	  Returns:  std::unique_ptr<MainWindow>&
 				  The main window
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	/*--------------------------------------------------------------------
-	  TODO: Game::GetWindow definition (remove the comment)
-	--------------------------------------------------------------------*/
+
+	std::unique_ptr<MainWindow>& Game::GetWindow() {
+		return m_mainWindow;
+	}
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetRenderer
@@ -115,7 +131,9 @@ namespace library
 	  Returns:  std::unique_ptr<Renderer>&
 				  The renderer
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	/*--------------------------------------------------------------------
-	  TODO: Game::GetRenderer definition (remove the comment)
-	--------------------------------------------------------------------*/
+
+	std::unique_ptr<Renderer>& Game::GetRenderer() {
+		return m_renderer;
+	}
+
 }
