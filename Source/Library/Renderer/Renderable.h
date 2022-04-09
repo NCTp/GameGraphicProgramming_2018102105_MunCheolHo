@@ -27,7 +27,7 @@ namespace library
       Methods:  Initialize
                   Pure virtual function that initializes the object
                 Update
-                  Pure virtual function that updates the object each 
+                  Pure virtual function that updates the object each
                   frame
                 GetVertexBuffer
                   Returns the vertex buffer
@@ -38,17 +38,16 @@ namespace library
                 GetWorldMatrix
                   Returns the world matrix
                 GetNumVertices
-                  Pure virtual function that returns the number of 
+                  Pure virtual function that returns the number of
                   vertices
                 GetNumIndices
-                  Pure virtual function that returns the number of 
+                  Pure virtual function that returns the number of
                   indices
                 Renderable
                   Constructor.
                 ~Renderable
                   Destructor.
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
-
     class Renderable
     {
     public:
@@ -72,6 +71,13 @@ namespace library
         ComPtr<ID3D11Buffer>& GetIndexBuffer();
         ComPtr<ID3D11Buffer>& GetConstantBuffer();
         const XMMATRIX& GetWorldMatrix() const;
+
+        void RotateX(_In_ FLOAT angle);
+        void RotateY(_In_ FLOAT angle);
+        void RotateZ(_In_ FLOAT angle);
+        void RotateRollPitchYaw(_In_ FLOAT roll, _In_ FLOAT pitch, _In_ FLOAT yaw);
+        void Scale(_In_ FLOAT scaleX, _In_ FLOAT scaleY, _In_ FLOAT scaleZ);
+        void Translate(_In_ const XMVECTOR& offset);
 
         virtual UINT GetNumVertices() const = 0;
         virtual UINT GetNumIndices() const = 0;

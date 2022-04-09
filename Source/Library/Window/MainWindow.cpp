@@ -1,4 +1,4 @@
-#include "Window/MainWindow.h"
+﻿#include "Window/MainWindow.h"
 
 namespace library
 {
@@ -10,9 +10,11 @@ namespace library
 
       Args:     HINSTANCE hInstance
                   Handle to the instance
+
                 INT nCmdShow
                     Is a flag that says whether the main application window
                     will be minimized, maximized, or shown normally
+
                 PCWSTR pszWindowName
                     The window name
 
@@ -22,12 +24,12 @@ namespace library
 
     HRESULT MainWindow::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow, _In_ PCWSTR pszWindowName) {
         HRESULT hr = initialize(
-            hInstance, 
-            nCmdShow, 
+            hInstance,
+            nCmdShow,
             pszWindowName,
             WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 
-            0,0,800,600,
+            0, 0, 800, 600,
             nullptr,
             nullptr);
         if (FAILED(hr))
@@ -54,8 +56,10 @@ namespace library
 
       Args:     UINT uMessage
                   Message code
+
                 WPARAM wParam
                     Additional data the pertains to the message
+
                 LPARAM lParam
                     Additional data the pertains to the message
 

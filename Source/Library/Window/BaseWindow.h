@@ -1,4 +1,4 @@
-/*+===================================================================
+﻿/*+===================================================================
   File:      BASEWINDOW.H
   Summary:   BaseWindow header file contains declarations of the
              base class of all windows used in the library.
@@ -13,9 +13,7 @@ namespace library
 {
     /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
       Class:    BaseWindow
-
       Summary:  An abstract base class from specific window
-
       Methods:  WindowProc
                   The window procedure of the window
                 Initialize
@@ -73,10 +71,8 @@ namespace library
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
         Method:   BaseWindow<DerivedType>::WindowProc
-
         Summary:  Defines the behavior of the window—its appearance, how
                 it interacts with the user, and so forth
-
         Args:     HWND hWnd
                     Handle to the window
                 UINT uMessage
@@ -85,9 +81,7 @@ namespace library
                     Additional data the pertains to the message
                 LPARAM lParam
                     Additional data the pertains to the message
-
         Modifies: [m_hWnd].
-
         Returns:  LRESULT
                     Integer value that your program returns to Windows
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -121,9 +115,7 @@ namespace library
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
         Method:   BaseWindow<DerivedType>::BaseWindow
-
         Summary:  Constructor
-
         Modifies: [m_hInstance, m_hWnd, m_pszWindowName].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 
@@ -137,9 +129,7 @@ namespace library
     }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
         Method:   BaseWindow<DerivedType>::GetWindow()
-
         Summary:  Returns the handle to the window
-
         Returns:  HWND
                     The handle to the window
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -153,9 +143,7 @@ namespace library
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   BaseWindow<DerivedType>::initialize
-
       Summary:  Registers the window class and creates a window
-
       Args:     HINSTANCE hInstance
                   Handle to the instance
                 INT nCmdShow
@@ -179,9 +167,7 @@ namespace library
                 HMENU hMenu
                   A handle to a menu, or specifies a child-window
                   identifier depending on the window style
-
       Modifies: [m_hInstance, m_pszWindowName, m_hWnd].
-
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -206,7 +192,7 @@ namespace library
         // Create Window
         m_hInstance = hInstance;
         m_pszWindowName = pszWindowName;
-        
+
         RECT rc = { x, y, nWidth, nHeight };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
@@ -217,7 +203,7 @@ namespace library
             dwStyle,// Window style
 
             // Size and position
-            x,y,nWidth,nHeight,
+            x, y, nWidth, nHeight,
 
             hWndParent,		// Parent window    
             hMenu,			// Menu
@@ -236,7 +222,7 @@ namespace library
         // Returns a result code of HRESULT type
         return S_OK;
     }
-        
 
-    
+
+
 }

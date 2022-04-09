@@ -10,35 +10,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Renderer\DataTypes.h" />
-    <ClInclude Include="Renderer\Renderable.h" />
-    <ClInclude Include="Renderer\Renderer.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="Shader\PixelShader.h" />
-    <ClInclude Include="Shader\Shader.h" />
-    <ClInclude Include="Shader\VertexShader.h" />
-    <ClInclude Include="Window\BaseWindow.h" />
-    <ClInclude Include="Window\MainWindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Game\Game.cpp" />
-    <ClCompile Include="Renderer\Renderable.cpp" />
-    <ClCompile Include="Renderer\Renderer.cpp" />
-    <ClCompile Include="Shader\PixelShader.cpp" />
-    <ClCompile Include="Shader\Shader.cpp" />
-    <ClCompile Include="Shader\VertexShader.cpp" />
-    <ClCompile Include="Window\MainWindow.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f0c4f017-e7dc-4c93-b2d3-7f87c72c4398}</ProjectGuid>
+    <ProjectGuid>{7c6cb355-3ae9-408e-991f-2947bec32910}</ProjectGuid>
     <RootNamespace>Library</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -91,10 +66,10 @@
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)..\Library\x64\Debug"
-copy "$(TargetDir)" "$(SolutionDir)..\Library\x64\Debug"</Command>
+copy "$(TargetDir)" "$(SolutionDIr)..\Library\x64\Debug"</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -123,10 +98,10 @@ copy "$(TargetDir)" "$(SolutionDir)..\Library\x64\Debug"</Command>
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)..\Library\x64\Release"
-copy "$(TargetDir)" "$(SolutionDir)..\Library\x64\Release"</Command>
+copy "$(TargetDir)" "$(SolutionDIr)..\Library\x64\Release"</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
@@ -135,6 +110,31 @@ copy "$(TargetDir)" "$(SolutionDir)..\Library\x64\Release"</Command>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Renderer\DataTypes.h" />
+    <ClInclude Include="Renderer\Renderable.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Shader\PixelShader.h" />
+    <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Shader\VertexShader.h" />
+    <ClInclude Include="Window\BaseWindow.h" />
+    <ClInclude Include="Window\MainWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Renderer\Renderable.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Shader\PixelShader.cpp" />
+    <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="Shader\VertexShader.cpp" />
+    <ClCompile Include="Window\MainWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

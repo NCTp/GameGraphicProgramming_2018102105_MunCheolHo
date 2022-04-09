@@ -1,8 +1,8 @@
 ﻿/*+===================================================================
-  File:      YOURCUBE.H
+  File:      ORBITCUBE.H
 
   Summary:  Child Cube header file contains declarations of
-             YourCube class used for the lab samples of Game
+             OrbitCube class used for the lab samples of Game
              Graphics Programming course.
 
   Classes: Renderable
@@ -17,27 +17,27 @@
 
 
 /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
-      Class:    YourCube
+      Class:    OrbitCube
 
-      Summary:  YourCube class
+      Summary:  OrbitCube class
 
       Methods:  Update
                   Update the cube each frame
-                YourCube
+                OrbitCube
                   Constructor.
-                ~YourCube
+                ~OrbitCube
                   Destructor.
 C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
 
-class MyCube : public BaseCube
+class OrbitCube : public BaseCube
 {
 public:
-    MyCube() = default;
-    MyCube(const MyCube& other) = delete;
-    MyCube(MyCube&& other) = delete;
-    MyCube& operator=(const MyCube& other) = delete;
-    MyCube& operator=(MyCube&& other) = delete;
-    ~MyCube() = default;
+    OrbitCube() = default;
+    OrbitCube(const OrbitCube& other) = delete;
+    OrbitCube(OrbitCube&& other) = delete;
+    OrbitCube& operator=(const OrbitCube& other) = delete;
+    OrbitCube& operator=(OrbitCube&& other) = delete;
+    ~OrbitCube() = default;
 
     virtual void Update(_In_ FLOAT deltaTime) override;
 };

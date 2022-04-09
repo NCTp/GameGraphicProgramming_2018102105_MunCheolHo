@@ -1,14 +1,17 @@
-#include "MyCube.h"
+#include "Cube/MyCube.h"
 
+/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+  Method:   YourCube::Update
 
+  Summary:  Update the cube each frame
 
-void MyCube::Update(_In_ FLOAT deltaTime) {
+  Args:     FLOAT deltaTime
+              Time difference of a frame
+M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 
-    XMMATRIX mSpin = XMMatrixRotationZ(-deltaTime);
-    XMMATRIX mOrbit = XMMatrixRotationY(-deltaTime * 2.0f);
-    XMMATRIX mTranslate = XMMatrixTranslation(4.0f, 0.0f, 0.0f);
-    XMMATRIX mScale = XMMatrixScaling(0.3f, 0.3f, 0.3f);
+void MyCube::Update(_In_ FLOAT deltaTime)
+{
+    m_world = XMMatrixRotationY(deltaTime);
 
-    m_world = mScale * mSpin * mTranslate * mOrbit;
+}
 
-};

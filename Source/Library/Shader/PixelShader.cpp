@@ -9,9 +9,11 @@ namespace library
 
       Args:     PCWSTR pszFileName
                   Name of the file that contains the shader code
+
                 PCSTR pszEntryPoint
                   Name of the shader entry point functino where shader
                   execution begins
+
                 PCSTR pszShaderModel
                   Specifies the shader target or set of shader features
                   to compile against
@@ -80,5 +82,5 @@ namespace library
     {
         return m_pixelShader;
     }
-    
+
 }

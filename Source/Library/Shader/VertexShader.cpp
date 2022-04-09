@@ -9,9 +9,11 @@ namespace library
 
       Args:     PCWSTR pszFileName
                   Name of the file that contains the shader code
+
                 PCSTR pszEntryPoint
                   Name of the shader entry point functino where shader
                   execution begins
+
                 PCSTR pszShaderModel
                   Specifies the shader target or set of shader features
                   to compile against
@@ -22,10 +24,10 @@ namespace library
       TODO: VertexShader::VertexShader definition (remove the comment)
     --------------------------------------------------------------------*/
     VertexShader::VertexShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel) :
-        Shader::Shader(pszFileName,pszEntryPoint,pszShaderModel),
+        Shader::Shader(pszFileName, pszEntryPoint, pszShaderModel),
         m_vertexShader(nullptr),
         m_vertexLayout(nullptr)
-        
+
 
 
     {};
@@ -95,6 +97,7 @@ namespace library
 
       Returns:  ComPtr<ID3D11VertexShader>&
                   Vertex shader. Could be a nullptr
+
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
     /*--------------------------------------------------------------------
       TODO: VertexShader::GetVertexShader definition (remove the comment)
@@ -110,6 +113,7 @@ namespace library
 
       Returns:  ComPtr<ID3D11InputLayout>&
                   Vertex input layout
+
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
     /*--------------------------------------------------------------------
       TODO: VertexShader::GetVertexLayout definition (remove the comment)

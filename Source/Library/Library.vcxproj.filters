@@ -14,22 +14,28 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="소스 파일\Game">
-      <UniqueIdentifier>{95a6a264-0f48-485d-a3b7-b93a39128d5c}</UniqueIdentifier>
+      <UniqueIdentifier>{6ee5a801-a36b-47b1-8ca9-3384fe7c39ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Window">
-      <UniqueIdentifier>{19f1cad1-50dc-4603-8387-bc62e45beaf1}</UniqueIdentifier>
+    <Filter Include="소스 파일\Window">
+      <UniqueIdentifier>{3a58939d-d2eb-4e64-836f-4318a30657df}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Renderer">
-      <UniqueIdentifier>{94de112f-5eac-452f-a061-110c89875ab5}</UniqueIdentifier>
+      <UniqueIdentifier>{2f730441-badc-437f-b4be-0a75f99671b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Game">
+      <UniqueIdentifier>{cf52347c-4138-4306-9334-7498e003b1ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Window">
+      <UniqueIdentifier>{8c926d19-58c7-49fb-96e0-434427fd304a}</UniqueIdentifier>
     </Filter>
     <Filter Include="헤더 파일\Renderer">
-      <UniqueIdentifier>{9c39ebc6-8e4f-479f-a869-aa67a40bfa5b}</UniqueIdentifier>
+      <UniqueIdentifier>{6aeeb8c2-78a8-4097-9623-1e42f47ba11a}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Shader">
-      <UniqueIdentifier>{bddc9182-9912-4dea-ac68-22e5469776ab}</UniqueIdentifier>
+      <UniqueIdentifier>{de7fcc12-aa0f-4199-999b-d434e95822be}</UniqueIdentifier>
     </Filter>
     <Filter Include="헤더 파일\Shader">
-      <UniqueIdentifier>{8e2ee383-b194-4eab-8d0b-f1eba2f1e990}</UniqueIdentifier>
+      <UniqueIdentifier>{a8bf7a9f-0565-4421-a582-59ce0ddb761e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,22 +46,25 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Game\Game.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Window\BaseWindow.h">
-      <Filter>헤더 파일\Window</Filter>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>헤더 파일\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Window\MainWindow.h">
       <Filter>헤더 파일\Window</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\DataTypes.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Window\BaseWindow.h">
+      <Filter>헤더 파일\Window</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Renderable.h">
       <Filter>헤더 파일\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Renderer.h">
+    <ClInclude Include="Renderer\DataTypes.h">
       <Filter>헤더 파일\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\VertexShader.h">
+      <Filter>헤더 파일\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Shader\PixelShader.h">
       <Filter>헤더 파일\Shader</Filter>
@@ -63,21 +72,13 @@
     <ClInclude Include="Shader\Shader.h">
       <Filter>헤더 파일\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\VertexShader.h">
-      <Filter>헤더 파일\Shader</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Game.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
     <ClCompile Include="Window\MainWindow.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Window</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Renderer.cpp">
       <Filter>소스 파일\Renderer</Filter>
@@ -94,5 +95,10 @@
     <ClCompile Include="Shader\VertexShader.cpp">
       <Filter>소스 파일\Shader</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

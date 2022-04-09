@@ -10,28 +10,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Cube\BaseCube.cpp" />
-    <ClCompile Include="Cube\MyCube.cpp" />
-    <ClCompile Include="Cube\MyCube2.cpp" />
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Cube\BaseCube.h" />
-    <ClInclude Include="Cube\MyCube.h" />
-    <ClInclude Include="Cube\MyCube2.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\PS.hlsl" />
-    <FxCompile Include="Shaders\VS.hlsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\Shaders.fxh" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7f63f3db-aba1-4703-a764-913e3942db3c}</ProjectGuid>
+    <ProjectGuid>{6d053042-eedc-4bc4-b4e7-8c16e87eca14}</ProjectGuid>
     <RootNamespace>Game</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -74,21 +56,19 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)..\Source\Library;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Libraryd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)..\Library\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Libraryd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderType>Effect</ShaderType>
     </FxCompile>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,9 +95,26 @@
     </FxCompile>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
     </FxCompile>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Cube\BaseCube.cpp" />
+    <ClCompile Include="Cube\MyCube.cpp" />
+    <ClCompile Include="Cube\OrbitCube.cpp" />
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cube\BaseCube.h" />
+    <ClInclude Include="Cube\MyCube.h" />
+    <ClInclude Include="Cube\OrbitCube.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Shaders.fxh" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PS.hlsl" />
+    <FxCompile Include="Shaders\VS.hlsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

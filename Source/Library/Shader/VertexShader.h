@@ -33,7 +33,6 @@ namespace library
                 ~Game
                   Destructor.
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
-
     class VertexShader : public Shader
     {
     public:

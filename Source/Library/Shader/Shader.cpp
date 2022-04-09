@@ -8,10 +8,13 @@ namespace library
       Summary:  Constructor
 
       Args:     PCWSTR pszFileName
+
                   Name of the file that contains the shader code
               PCSTR pszEntryPoint
+
                   Name of the shader entry point functino where shader
                   execution begins
+
               PCSTR pszShaderModel
                   Specifies the shader target or set of shader features
                   to compile against
@@ -43,7 +46,7 @@ namespace library
     PCWSTR Shader::GetFileName() const {
         return m_pszFileName;
     }
-   
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Shader::compile
@@ -79,14 +82,14 @@ namespace library
 
         ComPtr<ID3DBlob> pErrorBlob;
         hr = D3DCompileFromFile(
-            m_pszFileName, 
-            defines, 
+            m_pszFileName,
+            defines,
             D3D_COMPILE_STANDARD_FILE_INCLUDE,
-            m_pszEntryPoint, 
+            m_pszEntryPoint,
             m_pszShaderModel,
-            dwShaderFlags, 
-            0, 
-            ppOutBlob, 
+            dwShaderFlags,
+            0,
+            ppOutBlob,
             pErrorBlob.GetAddressOf());
 
         if (FAILED(hr))
