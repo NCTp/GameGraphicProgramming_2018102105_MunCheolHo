@@ -2,7 +2,7 @@
   File:      GAME.H
 
   Summary:   Game header file contains declarations of functions
-             used for the lab samples of Game Graphics Programming
+			 used for the lab samples of Game Graphics Programming 
              course.
 
   Classes:  Game
@@ -18,7 +18,6 @@
 
 namespace library
 {
-
     /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
       Class:    Game
 
@@ -31,10 +30,10 @@ namespace library
                 GetGameName
                   Returns the name of the game
                 GetWindow
-                  Returns the reference to the unique pointer to the
+                  Returns the reference to the unique pointer to the 
                   main window
                 GetRenderer
-                  Returns the reference to the unique pointer to the
+                  Returns the reference to the unique pointer to the 
                   renderer
                 Game
                   Constructor.

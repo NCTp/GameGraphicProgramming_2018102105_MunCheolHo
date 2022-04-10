@@ -11,7 +11,7 @@ M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 
 void MyCube::Update(_In_ FLOAT deltaTime)
 {
-    m_world = XMMatrixRotationY(deltaTime);
+    RotateY(deltaTime);
 
 }
 

@@ -61,7 +61,7 @@ namespace library
 	  Returns:  INT
 				  Status code to return to the operating system
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-	INT Game::Run() 
+	INT Game::Run()
 	{
 
 		MSG msg = { 0 };
@@ -90,7 +90,10 @@ namespace library
 				elapsedTime /= (float)(frequency.QuadPart);
 
 				//Update and render
+				m_renderer->HandleInput(m_mainWindow->GetDirections(), m_mainWindow->GetMouseRelativeMovement(), elapsedTime );
+				m_mainWindow->ResetMouseMovement();
 				m_renderer->Update(elapsedTime);
+				QueryPerformanceCounter(&startingTime);
 				m_renderer->Render();
 
 			}
@@ -98,6 +101,8 @@ namespace library
 		return static_cast<INT>(msg.wParam);
 
 	}
+
+
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetGameName

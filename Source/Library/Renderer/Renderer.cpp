@@ -26,8 +26,9 @@ namespace library
         m_renderTargetView(nullptr),
         m_depthStencil(nullptr),
         m_depthStencilView(nullptr),
+        m_camera(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)),
         // Initialize view matrix and projection matrix
-        m_view(),
+        // m_view(),
         m_projection(),
 
         m_renderables(std::unordered_map<PCWSTR, std::shared_ptr<Renderable>>()),
@@ -259,7 +260,7 @@ namespace library
         XMVECTOR eye = XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);
         XMVECTOR at = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
         XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-        m_view = XMMatrixLookAtLH(eye, at, up);
+        //m_view = XMMatrixLookAtLH(eye, at, up);
 
         // Initialize the projection matrix
         m_projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, width / (FLOAT)height, 0.01f, 100.0f);
@@ -369,6 +370,27 @@ namespace library
             return S_OK;
         }
     }
+    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+      Method:   Renderer::HandleInput
+
+      Summary:  Add the pixel shader into the renderer and initialize it
+
+      Args:     const DirectionsInput& directions
+                  Data structure containing keyboard input data
+
+                const MouseRelativeMovement& mouseRelativeMovement
+                  Data structure containing mouse relative input data
+
+      Modifies: [m_camera].
+    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+    void Renderer::HandleInput(const DirectionsInput& directions, const MouseRelativeMovement& mouseRelativeMovement, FLOAT deltaTime)
+    {
+        m_camera.HandleInput(
+            directions,
+            mouseRelativeMovement,
+            deltaTime
+        );
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderer::Update
@@ -382,9 +404,12 @@ namespace library
     {
         for (auto renderablesElem : m_renderables)
         {
-
             renderablesElem.second->Update(deltaTime);
+
         }
+
+        m_camera.Update(deltaTime);
+
     }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
@@ -437,7 +462,8 @@ namespace library
             // Update constant buffer
             ConstantBuffer cb;
             cb.World = XMMatrixTranspose(element.second->GetWorldMatrix());
-            cb.View = XMMatrixTranspose(m_view);
+            //cb.View = XMMatrixTranspose(cb.View);
+            cb.View = XMMatrixTranspose(m_camera.GetView());
             cb.Projection = XMMatrixTranspose(m_projection);
             m_immediateContext->UpdateSubresource(
                 element.second->GetConstantBuffer().Get(),
@@ -505,8 +531,8 @@ namespace library
     {
 
         if (!m_renderables.contains(pszRenderableName)) {
-
             return E_FAIL;
+
         }
 
         else {
@@ -514,9 +540,10 @@ namespace library
             if (m_vertexShaders.contains(pszVertexShaderName)) {
                 m_renderables.find(pszRenderableName)->second->SetVertexShader(m_vertexShaders.find(pszVertexShaderName)->second);
                 return S_OK;
-            }
 
+            }
             return E_FAIL;
+
         }
 
     }
@@ -541,6 +568,7 @@ namespace library
 
         if (!m_renderables.contains(pszRenderableName)) {
             return E_FAIL;
+
         }
 
         else {
