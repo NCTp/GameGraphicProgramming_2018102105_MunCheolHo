@@ -132,9 +132,7 @@ namespace library
             GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, nullptr, &dataSize, sizeof(RAWINPUTHEADER));
 
             std::unique_ptr<BYTE[]> rawData = std::make_unique<BYTE[]>(dataSize);
-
             if (dataSize <= 0) return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
-
             if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, rawData.get(), &dataSize, sizeof(RAWINPUTHEADER)) == dataSize)
             {
                 RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(rawData.get());
@@ -165,10 +163,10 @@ namespace library
             case 0x44: // D
                 m_directions.bRight = true;
                 break;
-            case VK_SPACE: // Up
+            case 0x20: // Up, SPACEBAR
                 m_directions.bUp = true;
                 break;
-            case VK_SHIFT: // Down
+            case 0x10: // Down, LSHIFT
                 m_directions.bDown = true;
                 break;
 
@@ -192,10 +190,10 @@ namespace library
             case 0x44: // D
                 m_directions.bRight = false;
                 break;
-            case VK_SPACE: // Up
+            case 0x20: // SPACEBAR
                 m_directions.bUp = false;
                 break;
-            case VK_SHIFT: // Down
+            case 0x10: // LSHIFT
                 m_directions.bDown = false;
                 break;
 
