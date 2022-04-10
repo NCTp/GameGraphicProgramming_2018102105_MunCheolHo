@@ -37,6 +37,12 @@
     <Filter Include="헤더 파일\Shader">
       <UniqueIdentifier>{a8bf7a9f-0565-4421-a582-59ce0ddb761e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Camera">
+      <UniqueIdentifier>{8346b094-7634-4e44-8c17-cc516a993b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Camera">
+      <UniqueIdentifier>{4aec7567-0fcb-46b3-8b99-03da338094ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -72,6 +78,9 @@
     <ClInclude Include="Shader\Shader.h">
       <Filter>헤더 파일\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Camera\Camera.h">
+      <Filter>헤더 파일\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Game.cpp">
@@ -94,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="Shader\VertexShader.cpp">
       <Filter>소스 파일\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\Camera.cpp">
+      <Filter>소스 파일\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

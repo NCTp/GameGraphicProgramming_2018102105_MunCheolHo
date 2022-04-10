@@ -99,12 +99,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cube\BaseCube.cpp" />
+    <ClCompile Include="Cube\CrazyCube.cpp" />
     <ClCompile Include="Cube\MyCube.cpp" />
     <ClCompile Include="Cube\OrbitCube.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cube\BaseCube.h" />
+    <ClInclude Include="Cube\CrazyCube.h" />
     <ClInclude Include="Cube\MyCube.h" />
     <ClInclude Include="Cube\OrbitCube.h" />
   </ItemGroup>

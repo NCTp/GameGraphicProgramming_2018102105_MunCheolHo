@@ -1,9 +1,12 @@
 ﻿/*+===================================================================
   File:      BASEWINDOW.H
+
   Summary:   BaseWindow header file contains declarations of the
              base class of all windows used in the library.
+
   Classes: BaseWindow<DerivedType>
-  © 2022 Kyung Hee University
+
+  � 2022 Kyung Hee University
 ===================================================================+*/
 #pragma once
 
@@ -13,7 +16,9 @@ namespace library
 {
     /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
       Class:    BaseWindow
+
       Summary:  An abstract base class from specific window
+
       Methods:  WindowProc
                   The window procedure of the window
                 Initialize
@@ -25,11 +30,11 @@ namespace library
                     Purely virtual function that that handles the
                     messages
                 GetWindow
-                    Getter for the handle to the window
+                  Getter for the handle to the window
                 BaseWindow
-                    Constructor.
+                  Constructor.
                 ~BaseWindow
-                    Destructor.
+                  Destructor.
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
     template <class DerivedType>
     class BaseWindow

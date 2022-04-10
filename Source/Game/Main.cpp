@@ -17,6 +17,7 @@
 
 #include "Cube/MyCube.h"
 #include "Cube/OrbitCube.h"
+#include "Cube/CrazyCube.h"
 
 /*F+F+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   Function: wWinMain
@@ -80,6 +81,18 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     if (FAILED(game->GetRenderer()->SetPixelShaderOfRenderable(L"OrbitCube", L"MainShader")))
         return 0;
+
+    // Third cube
+    std::shared_ptr<CrazyCube> crazyCube = std::make_shared<CrazyCube>();
+    if (FAILED(game->GetRenderer()->AddRenderable(L"CrazyCube", crazyCube)))
+        return 0;
+
+    if (FAILED(game->GetRenderer()->SetVertexShaderOfRenderable(L"CrazyCube", L"MainShader")))
+        return 0;
+
+    if (FAILED(game->GetRenderer()->SetPixelShaderOfRenderable(L"CrazyCube", L"MainShader")))
+        return 0;
+
 
     // Initialize and run  game
     if (FAILED(game->Initialize(hInstance, nCmdShow)))
