@@ -82,6 +82,7 @@ namespace library
     const XMMATRIX& Camera::GetView() const
     {
         return m_view;
+
     }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Camera::HandleInput
