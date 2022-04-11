@@ -101,63 +101,36 @@ namespace library
     void Camera::HandleInput(_In_ const DirectionsInput& directions, _In_ const MouseRelativeMovement& mouseRelativeMovement, _In_ FLOAT deltaTime)
     {
 
-
-        int xMovementInput = 0, yMovementInput = 0, zMovementInput = 0, xRotationInput = 0, yRotationInput = 0;
         //float speed = 15.0f;
 
-        // Handle xInput
+        // Handle xInput, Left and RIght
         if (directions.bRight == true)
-            xMovementInput = 1;
+            m_moveLeftRight += m_travelSpeed * deltaTime;
         else if (directions.bLeft == true)
-            xMovementInput = -1;
+            m_moveLeftRight -= m_travelSpeed * deltaTime;
 
-        // Handle yInput
+        // Handle yInput, Up and Down
         if (directions.bUp == true)
-            yMovementInput = 1;
+            m_moveUpDown += m_travelSpeed * deltaTime;
         else if (directions.bDown == true)
-            yMovementInput = -1;
+            m_moveUpDown -= m_travelSpeed * deltaTime;
 
-        // Handle zInput
+        // Handle zInput, Front and Back
         if (directions.bFront == true)
-            zMovementInput = 1;
+            m_moveBackForward += m_travelSpeed * deltaTime;
         else if (directions.bBack == true)
-            zMovementInput = -1;
+            m_moveBackForward -= m_travelSpeed * deltaTime;
 
+        // Handle Mouse Rotation
+        m_yaw += static_cast<FLOAT>(mouseRelativeMovement.X * m_rotationSpeed * deltaTime);
+        m_pitch += static_cast<FLOAT>(mouseRelativeMovement.Y * m_rotationSpeed * deltaTime);
 
-        // Handle Aim Inputs
-        xRotationInput = mouseRelativeMovement.X;
-        yRotationInput = mouseRelativeMovement.Y;
+        // Camera Rotation Range
+        if (m_pitch < -XM_PIDIV2)
+            m_pitch = -XM_PIDIV2;
+        else if (m_pitch > XM_PIDIV2)
+            m_pitch = XM_PIDIV2;
 
-
-        // Handle Movements
-        if (xMovementInput != 0 || yMovementInput != 0 || zMovementInput != 0)
-        {
-            XMVECTOR xmvMove = XMVectorSet((float)xMovementInput, (float)yMovementInput, (float)zMovementInput, 0.0f);
-            xmvMove = XMVector3Normalize(xmvMove);
-            xmvMove *= m_travelSpeed * deltaTime;
-
-            XMFLOAT3 xmfMove;
-            XMStoreFloat3(&xmfMove, xmvMove);
-
-            m_moveLeftRight += xmfMove.x;
-            m_moveUpDown += xmfMove.y;
-            m_moveBackForward = xmfMove.z;
-        }
-
-        // Handle Aim
-        if (xRotationInput != 0 || yRotationInput != 0)
-        {
-            XMVECTOR xmvRotation = XMVectorSet((float)xRotationInput, (float)yRotationInput, 0.0f, 0.0f);
-            xmvRotation = XMVector3Normalize(xmvRotation);
-            xmvRotation *= m_rotationSpeed * deltaTime;
-
-            XMFLOAT3 xmfRotation;
-            XMStoreFloat3(&xmfRotation, xmvRotation);
-
-            m_yaw += xmfRotation.x;
-            m_pitch += xmfRotation.y;
- 
-        }
 
     }
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
