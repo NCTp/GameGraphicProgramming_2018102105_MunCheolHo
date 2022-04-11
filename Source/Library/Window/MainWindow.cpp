@@ -36,7 +36,6 @@ namespace library
             nCmdShow,
             pszWindowName,
             WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-
             0, 0, 800, 600,
             nullptr,
             nullptr);
