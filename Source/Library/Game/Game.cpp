@@ -106,7 +106,9 @@ namespace library
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetGameName
+
 	  Summary:  Returns the name of the game
+
 	  Returns:  PCWSTR
 				  Name of the game
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -118,7 +120,9 @@ namespace library
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetWindow
+
 	  Summary:  Returns the main window
+
 	  Returns:  std::unique_ptr<MainWindow>&
 				  The main window
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -131,7 +135,9 @@ namespace library
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::GetRenderer
+
 	  Summary:  Returns the renderer
+
 	  Returns:  std::unique_ptr<Renderer>&
 				  The renderer
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/

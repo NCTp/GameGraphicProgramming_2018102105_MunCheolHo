@@ -25,7 +25,7 @@ namespace library
     HRESULT MainWindow::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow, _In_ PCWSTR pszWindowName) 
     {
         HRESULT hr;
-        RECT rc;
+        RECT rc, rc2;
         //GetClientRect(m_hWnd, &rc);
         rc = { 0, 0, 800, 600 };
 
@@ -40,14 +40,16 @@ namespace library
             0, 0, 800, 600,
             nullptr,
             nullptr);
+
         if (FAILED(hr))
             return 0;
 
+        GetClientRect(m_hWnd, &rc2);
 
-        p1.x = rc.left;
-        p1.y = rc.top;
-        p2.x = rc.right;
-        p2.y = rc.bottom;
+        p1.x = rc2.left;
+        p1.y = rc2.top;
+        p2.x = rc2.right;
+        p2.y = rc2.bottom;
 
         if (!ClientToScreen(m_hWnd, &p1)) 
             return E_FAIL;
@@ -132,7 +134,9 @@ namespace library
             GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, nullptr, &dataSize, sizeof(RAWINPUTHEADER));
 
             std::unique_ptr<BYTE[]> rawData = std::make_unique<BYTE[]>(dataSize);
+
             if (dataSize <= 0) return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
+
             if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, rawData.get(), &dataSize, sizeof(RAWINPUTHEADER)) == dataSize)
             {
                 RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(rawData.get());
@@ -216,9 +220,6 @@ namespace library
       Returns:  const DirectionsInput&
                   Keyboard direction input
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: MainWindow::GetDirections definition (remove the comment)
-    --------------------------------------------------------------------*/
     const DirectionsInput& MainWindow::GetDirections() const
     {
         return m_directions;
@@ -232,9 +233,6 @@ namespace library
       Returns:  const MouseRelativeMovement&
                   Mouse relative movement
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: MainWindow::GetMouseRelativeMovement definition (remove the comment)
-    --------------------------------------------------------------------*/
     const MouseRelativeMovement& MainWindow::GetMouseRelativeMovement() const
     {
         return m_mouseRelativeMovement;
@@ -245,9 +243,6 @@ namespace library
 
       Summary:  Reset the mouse relative movement to zero
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: MainWindow::ResetMouseMovement definition (remove the comment)
-    --------------------------------------------------------------------*/
     void MainWindow::ResetMouseMovement()
     {
         m_mouseRelativeMovement = {};

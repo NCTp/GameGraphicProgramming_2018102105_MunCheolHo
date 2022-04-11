@@ -12,9 +12,6 @@ namespace library
                  m_padding, m_cameraForward, m_cameraRight, m_cameraUp, 
                  m_eye, m_at, m_up, m_rotation, m_view].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::Camera definition (remove the comment)
-    --------------------------------------------------------------------*/
     Camera::Camera(_In_ const XMVECTOR& position) :
 
         m_yaw(0.0f),
@@ -23,7 +20,7 @@ namespace library
         m_moveBackForward(0.0f),
         m_moveUpDown(0.0f),
         m_travelSpeed(10.0f),
-        m_rotationSpeed(10.0f),
+        m_rotationSpeed(18.0f),
         m_padding(),
         m_cameraForward(DEFAULT_FORWARD),
         m_cameraRight(DEFAULT_RIGHT),
@@ -43,9 +40,6 @@ namespace library
       Returns:  const XMVECTOR&
                   The eye vector
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::GetEye definition (remove the comment)
-    --------------------------------------------------------------------*/
     const XMVECTOR& Camera::GetEye() const
     {
         return m_eye;
@@ -59,9 +53,6 @@ namespace library
       Returns:  const XMVECTOR&
                   The at vector
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::GetAt definition (remove the comment)
-    --------------------------------------------------------------------*/
     const XMVECTOR& Camera::GetAt() const
     {
         return m_at;
@@ -75,9 +66,6 @@ namespace library
       Returns:  const XMVECTOR&
                   The up vector
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::GetUp definition (remove the comment)
-    --------------------------------------------------------------------*/
     const XMVECTOR& Camera::GetUp() const
     {
         return m_up;
@@ -91,9 +79,6 @@ namespace library
       Returns:  const XMMATRIX&
                   The view matrix
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::GetView definition (remove the comment)
-    --------------------------------------------------------------------*/
     const XMMATRIX& Camera::GetView() const
     {
         return m_view;
@@ -113,9 +98,6 @@ namespace library
       Modifies: [m_yaw, m_pitch, m_moveLeftRight, m_moveBackForward,
                  m_moveUpDown].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::HandleInput definition (remove the comment)
-    --------------------------------------------------------------------*/
     void Camera::HandleInput(_In_ const DirectionsInput& directions, _In_ const MouseRelativeMovement& mouseRelativeMovement, _In_ FLOAT deltaTime)
     {
 
@@ -190,9 +172,6 @@ namespace library
                  m_cameraForward, m_eye, m_moveLeftRight, 
                  m_moveBackForward, m_moveUpDown, m_up, m_view].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Camera::Update definition (remove the comment)
-    --------------------------------------------------------------------*/
     void Camera::Update(_In_ FLOAT deltaTime) {
         
         XMMATRIX yawRotation;
