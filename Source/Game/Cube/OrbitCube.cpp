@@ -16,12 +16,14 @@ void OrbitCube::Update(_In_ FLOAT deltaTime)
 {
 
     m_deltaTime += deltaTime;
-    XMMATRIX Spin = XMMatrixRotationZ(-m_deltaTime);
-    XMMATRIX Orbit = XMMatrixRotationY(-m_deltaTime * 2.0f);
-    XMMATRIX Translate = XMMatrixTranslation(-4.0f, 0.0f, 0.0f);
-    XMMATRIX Scale = XMMatrixScaling(0.3f, 0.3f, 0.3f);
+    m_world = XMMatrixIdentity();
 
-    m_world = Scale * Spin * Translate * Orbit;
+    Scale(0.3f, 0.3f, 0.3f);
+    RotateZ(-m_deltaTime);
+    Translate(XMVectorSet(-4.0f, 0.0f, 0.0f, 0.0f));
+    RotateY(-m_deltaTime * 2.0f);
+
+
 
 }
 

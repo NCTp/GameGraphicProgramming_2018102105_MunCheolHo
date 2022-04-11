@@ -4,7 +4,6 @@
 
 CrazyCube::CrazyCube() :
     m_deltaTime(0.0f)
-
 {}
 
 
@@ -22,12 +21,17 @@ void CrazyCube::Update(_In_ FLOAT deltaTime)
 {
     m_deltaTime += deltaTime;
 
-    XMMATRIX Spin = XMMatrixRotationZ(-m_deltaTime);
-    XMMATRIX Orbit = XMMatrixRotationY(-m_deltaTime * 20.0f);
-    XMMATRIX Translate = XMMatrixTranslation(0.0f, 3.0f, 0.0f);
-    XMMATRIX Scale = XMMatrixScaling(0.7f * (-m_deltaTime), 0.7f, 0.7f);
-    
-    m_world = Scale * Spin * Translate * Orbit;
+    m_world = XMMatrixIdentity();
+
+    Scale(0.7f, 0.7f * (-m_deltaTime), 0.7f);
+
+    RotateZ(-m_deltaTime);
+    Translate(XMVectorSet(0.0f, 3.0f, 0.0f, 0.0f));
+    RotateY(-m_deltaTime * 20.0f);
+
+    //XMVECTOR xmVector(0.0f, 3.0f, 0.0f);
+    //Scale(0.7f , 0.7f * (-m_deltaTime), 0.7f);
+
 
 }
 
