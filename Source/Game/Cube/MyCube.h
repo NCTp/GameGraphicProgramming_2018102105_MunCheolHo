@@ -1,13 +1,13 @@
 ﻿/*+===================================================================
-  File:      YOURCUBE.H
+  File:      CUBE1.H
 
-  Summary:  Child Cube header file contains declarations of
-             YourCube class used for the lab samples of Game
-             Graphics Programming course.
+  Summary:   Cube header file contains declarations of Cube class
+             used for the lab samples of Game Graphics Programming
+             course.
 
-  Classes: Renderable
+  Classes: Cube
 
-  � 2022 Kyung Hee University
+  © 2022 Kyung Hee University
 ===================================================================+*/
 #pragma once
 
@@ -15,24 +15,22 @@
 
 #include "Cube/BaseCube.h"
 
-
 /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
-      Class:    YourCube
+  Class:    Cube
 
-      Summary:  YourCube class
+  Summary:  A renderable 3d cube object
 
-      Methods:  Update
-                  Update the cube each frame
-                YourCube
-                  Constructor.
-                ~YourCube
-                  Destructor.
+  Methods:  Update
+              Overriden function that updates the cube every frame
+            Cube
+              Constructor.
+            ~Cube
+              Destructor.
 C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
-
 class MyCube : public BaseCube
 {
 public:
-    MyCube() = default;
+    MyCube(const std::filesystem::path& textureFilePath);
     MyCube(const MyCube& other) = delete;
     MyCube(MyCube&& other) = delete;
     MyCube& operator=(const MyCube& other) = delete;

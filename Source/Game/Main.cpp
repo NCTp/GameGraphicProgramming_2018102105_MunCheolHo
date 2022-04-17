@@ -17,6 +17,7 @@
 #include <source_location>
 
 #include "Cube/Cube.h"
+#include "Cube/MyCube.h"
 #include "Game/Game.h"
 
 /*F+F+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -62,6 +63,7 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         return 0;
     }
 
+    // First Cube
     std::shared_ptr<Cube> cube = std::make_shared<Cube>("seafloor.dds");
     if (FAILED(game->GetRenderer()->AddRenderable(L"Cube", cube)))
     {
@@ -74,6 +76,22 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     }
 
     if (FAILED(game->GetRenderer()->SetPixelShaderOfRenderable(L"Cube", L"MainShader")))
+    {
+        return 0;
+    }
+    // Second Cube
+    std::shared_ptr<MyCube> mycube = std::make_shared<MyCube>("godricks.dds");
+    if (FAILED(game->GetRenderer()->AddRenderable(L"MyCube", mycube)))
+    {
+        return 0;
+    }
+
+    if (FAILED(game->GetRenderer()->SetVertexShaderOfRenderable(L"MyCube", L"MainShader")))
+    {
+        return 0;
+    }
+
+    if (FAILED(game->GetRenderer()->SetPixelShaderOfRenderable(L"MyCube", L"MainShader")))
     {
         return 0;
     }

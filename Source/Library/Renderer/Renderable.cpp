@@ -61,11 +61,13 @@ namespace library
         .Usage = D3D11_USAGE_DEFAULT,
         .BindFlags = D3D11_BIND_VERTEX_BUFFER,
         .CPUAccessFlags = 0,
+
         };
 
         D3D11_SUBRESOURCE_DATA InitData =
         {
             .pSysMem = getVertices()
+
         };
 
         hr = pDevice->CreateBuffer(&bd, &InitData, m_vertexBuffer.GetAddressOf());
@@ -112,6 +114,7 @@ namespace library
             .ComparisonFunc = D3D11_COMPARISON_NEVER,
             .MinLOD = 0,
             .MaxLOD = D3D11_FLOAT32_MAX
+
         };
         /*
         D3D11_SAMPLER_DESC sampDesc = {};

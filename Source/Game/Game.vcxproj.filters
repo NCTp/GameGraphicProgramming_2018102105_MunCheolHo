@@ -31,7 +31,10 @@
       <Filter>소스 파일\Cubes</Filter>
     </ClCompile>
     <ClCompile Include="Cube\Cube.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Cubes</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube\MyCube.cpp">
+      <Filter>소스 파일\Cubes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +55,10 @@
       <Filter>헤더 파일\Cubes</Filter>
     </ClInclude>
     <ClInclude Include="Cube\Cube.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Cubes</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube\MyCube.h">
+      <Filter>헤더 파일\Cubes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
