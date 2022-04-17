@@ -31,6 +31,6 @@ void MyCube::Update(_In_ FLOAT deltaTime)
     XMMATRIX translate = XMMatrixTranslation(0.0f, 3.0f, 0.0f);
     XMMATRIX scale = XMMatrixScaling(1.2f, 1.2f, 1.2f);
 
-    m_world = XMMatrixTranslation(0.0f, XMScalarSin(s_totalTime), 0.0f) * XMMatrixRotationY(s_totalTime) * translate * scale;
+    m_world = XMMatrixTranslation(0.0f, XMScalarSin(s_totalTime), 0.0f) * XMMatrixRotationY(-s_totalTime * 1.2f) * translate * scale;
 
 }

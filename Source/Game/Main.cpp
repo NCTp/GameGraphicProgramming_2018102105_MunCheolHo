@@ -80,7 +80,7 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         return 0;
     }
     // Second Cube
-    std::shared_ptr<MyCube> mycube = std::make_shared<MyCube>("godricks.dds");
+    std::shared_ptr<MyCube> mycube = std::make_shared<MyCube>("godricklovesdirectx.dds");
     if (FAILED(game->GetRenderer()->AddRenderable(L"MyCube", mycube)))
     {
         return 0;
