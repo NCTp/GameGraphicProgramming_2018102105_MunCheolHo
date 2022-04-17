@@ -84,6 +84,23 @@ namespace library
         return m_view;
 
     }
+
+    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+      Method:   Camera::GetConstantBuffer
+
+      Summary:  Returns the constant buffer
+
+      Returns:  ComPtr<ID3D11Buffer>&
+              The constant buffer
+    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+    /*--------------------------------------------------------------------
+      TODO: Camera::GetConstantBuffer definition (remove the comment)
+    --------------------------------------------------------------------*/
+    ComPtr<ID3D11Buffer>& Camera::GetConstantBuffer()
+    {
+        return m_cbChangeOnCameraMovement;
+    }
+
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Camera::HandleInput
 
@@ -134,6 +151,62 @@ namespace library
 
 
     }
+
+    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+      Method:   Camera::Initialize
+
+      Summary:  Initialize the view matrix constant buffers
+
+      Args:     ID3D11Device* pDevice
+                  Pointer to a Direct3D 11 device
+
+      Modifies: [m_cbChangeOnCameraMovement].
+    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+    /*--------------------------------------------------------------------
+      TODO: Camera::Initialize definition (remove the comment)
+    --------------------------------------------------------------------*/
+
+    HRESULT Camera::Initialize(_In_ ID3D11Device* device)
+    {
+        HRESULT hr = S_OK;
+
+        D3D11_BUFFER_DESC cbDesc =
+        {
+            .ByteWidth = sizeof(CBChangeOnResize),
+            .Usage = D3D11_USAGE_DEFAULT,
+            .BindFlags = D3D11_BIND_CONSTANT_BUFFER,
+            .CPUAccessFlags = 0,
+            .MiscFlags = 0,
+            .StructureByteStride = 0
+
+        };
+
+        CBChangeOnCameraMovement cb =
+        {
+            .View = m_view
+
+        };
+
+        D3D11_SUBRESOURCE_DATA initData =
+        {
+            .pSysMem = &cb,
+            .SysMemPitch = 0,
+            .SysMemSlicePitch = 0
+        };
+        
+
+        
+
+        hr = device->CreateBuffer(&cbDesc, &initData, &m_cbChangeOnCameraMovement);
+        if (FAILED(hr))
+            return hr;
+
+        return S_OK;
+
+    }
+
+
+
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Camera::Update
 
