@@ -14,10 +14,6 @@ namespace library
                  m_projection, m_renderables, m_vertexShaders,
                  m_pixelShaders].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Renderer::Renderer definition (remove the comment)
-    --------------------------------------------------------------------*/
-
     Renderer::Renderer() :
         m_driverType(D3D_DRIVER_TYPE_HARDWARE),
         m_featureLevel(D3D_FEATURE_LEVEL_11_1),
@@ -33,14 +29,12 @@ namespace library
         m_depthStencilView(nullptr),
         m_cbChangeOnResize(),
         m_padding(),
-        m_camera(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)),
-        // Initialize view matrix and projection matrix
-        // m_view(),
+        m_camera(XMVectorSet(0.0f, 0.0f, -3.0f, 0.0f)),
         m_projection(),
-
         m_renderables(std::unordered_map<std::wstring, std::shared_ptr<Renderable>>()),
         m_vertexShaders(std::unordered_map<std::wstring, std::shared_ptr<VertexShader>>()),
         m_pixelShaders(std::unordered_map<std::wstring, std::shared_ptr<PixelShader>>())
+
     {}
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
@@ -60,10 +54,6 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Renderer::Initialize definition (remove the comment)
-    --------------------------------------------------------------------*/
-
     HRESULT Renderer::Initialize(_In_ HWND hWnd)
     {
         HRESULT hr = S_OK;
@@ -145,12 +135,12 @@ namespace library
                 hr = m_immediateContext.As(&m_immediateContext1);
             }
 
-            DXGI_SWAP_CHAIN_DESC1 sd =
+            DXGI_SWAP_CHAIN_DESC1 descSwapChain =
             {
                 .Width = width,
                 .Height = height,
                 .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
-                .SampleDesc = 
+                .SampleDesc =
                 {
                     .Count = 1,
                     .Quality = 0
@@ -159,7 +149,7 @@ namespace library
                 .BufferCount = 1
             };
 
-            hr = dxgiFactory2->CreateSwapChainForHwnd(m_d3dDevice.Get(), hWnd, &sd, nullptr, nullptr, m_swapChain1.GetAddressOf());
+            hr = dxgiFactory2->CreateSwapChainForHwnd(m_d3dDevice.Get(), hWnd, &descSwapChain, nullptr, nullptr, m_swapChain1.GetAddressOf());
             if (SUCCEEDED(hr))
             {
                 hr = m_swapChain1.As(&m_swapChain);
@@ -168,19 +158,19 @@ namespace library
         else
         {
             // DirectX 11.0 systems
-            DXGI_SWAP_CHAIN_DESC sd =
+            DXGI_SWAP_CHAIN_DESC descSwapChain =
             {
                 .BufferDesc =
                 {
                     .Width = width,
                     .Height = height,
-                    .RefreshRate = { .Numerator = 60, .Denominator = 1 },
+                    .RefreshRate = {.Numerator = 60, .Denominator = 1 },
                     .Format = DXGI_FORMAT_R8G8B8A8_UNORM,
                 },
-                .SampleDesc = 
-                { 
-                    .Count = 1, 
-                    . Quality = 0 
+                .SampleDesc =
+                {
+                    .Count = 1,
+                    . Quality = 0
                 },
                 .BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT,
                 .BufferCount = 1,
@@ -188,7 +178,7 @@ namespace library
                 .Windowed = TRUE
             };
 
-            hr = dxgiFactory->CreateSwapChain(m_d3dDevice.Get(), &sd, m_swapChain.GetAddressOf());
+            hr = dxgiFactory->CreateSwapChain(m_d3dDevice.Get(), &descSwapChain, m_swapChain.GetAddressOf());
         }
 
         dxgiFactory->MakeWindowAssociation(hWnd, DXGI_MWA_NO_ALT_ENTER);
@@ -206,8 +196,6 @@ namespace library
         hr = m_d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, m_renderTargetView.GetAddressOf());
         if (FAILED(hr))
             return hr;
-
-
 
         // Create depth stencil texture
         D3D11_TEXTURE2D_DESC descDepth =
@@ -253,7 +241,7 @@ namespace library
         m_immediateContext->OMSetRenderTargets(1, m_renderTargetView.GetAddressOf(), m_depthStencilView.Get());
 
         // Setup the viewport
-        D3D11_VIEWPORT vp = 
+        D3D11_VIEWPORT vp =
         {
             .TopLeftX = 0,
             .TopLeftY = 0,
@@ -265,7 +253,7 @@ namespace library
 
         m_immediateContext->RSSetViewports(1, &vp);
 
-     
+
 
         // Initialize the view matrix
         XMVECTOR eye = XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);
@@ -276,7 +264,7 @@ namespace library
         // Initialize the projection matrix
         m_projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, width / (FLOAT)height, 0.01f, 100.0f);
 
-        D3D11_BUFFER_DESC cBufferDesc = {
+        D3D11_BUFFER_DESC descCbuffer = {
             .ByteWidth = sizeof(CBChangeOnResize),
             .Usage = D3D11_USAGE_DEFAULT,
             .BindFlags = D3D11_BIND_CONSTANT_BUFFER,
@@ -285,7 +273,7 @@ namespace library
             .StructureByteStride = 0
         };
 
-
+        // Create CBChangeOnResize constant buffer and set.
         CBChangeOnResize cbChangesOnResize;
         cbChangesOnResize.Projection = XMMatrixTranspose(m_projection);
 
@@ -294,8 +282,10 @@ namespace library
             .pSysMem = &cbChangesOnResize,
             .SysMemPitch = 0,
             .SysMemSlicePitch = 0
+
         };
-        hr = m_d3dDevice->CreateBuffer(&cBufferDesc, &cData, &m_cbChangeOnResize);
+
+        hr = m_d3dDevice->CreateBuffer(&descCbuffer, &cData, &m_cbChangeOnResize);
         if (FAILED(hr))
             return hr;
 
@@ -342,10 +332,7 @@ namespace library
       Returns:  HRESULT
                   Status code.
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Renderer::AddRenderable definition (remove the comment)
-    --------------------------------------------------------------------*/
-    HRESULT Renderer::AddRenderable(_In_ PCWSTR pszRenderableName, _In_ const std::shared_ptr<Renderable>& renderable) 
+    HRESULT Renderer::AddRenderable(_In_ PCWSTR pszRenderableName, _In_ const std::shared_ptr<Renderable>& renderable)
     {
 
         if (m_renderables.contains(pszRenderableName)) {
@@ -374,7 +361,7 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    HRESULT Renderer::AddVertexShader(_In_ PCWSTR pszVertexShaderName, _In_ const std::shared_ptr<VertexShader>& vertexShader) 
+    HRESULT Renderer::AddVertexShader(_In_ PCWSTR pszVertexShaderName, _In_ const std::shared_ptr<VertexShader>& vertexShader)
     {
 
         // Add some VertexShader into Renderables Unordered map
@@ -404,7 +391,7 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    HRESULT Renderer::AddPixelShader(_In_ PCWSTR pszPixelShaderName, _In_ const std::shared_ptr<PixelShader>& pixelShader) 
+    HRESULT Renderer::AddPixelShader(_In_ PCWSTR pszPixelShaderName, _In_ const std::shared_ptr<PixelShader>& pixelShader)
     {
 
         // Add some PixelShader into Renderables Unordered map
@@ -419,6 +406,7 @@ namespace library
         }
 
     }
+
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Renderer::HandleInput
 
@@ -426,7 +414,6 @@ namespace library
 
       Args:     const DirectionsInput& directions
                   Data structure containing keyboard input data
-
                 const MouseRelativeMovement& mouseRelativeMovement
                   Data structure containing mouse relative input data
 
@@ -466,7 +453,6 @@ namespace library
 
       Summary:  Render the frame
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-
     void Renderer::Render()
     {
         // Clear the back buffer
@@ -530,11 +516,11 @@ namespace library
 
             // Render the Cube
             // Set shaders and constant buffers, shader resources, and samplers
-            m_immediateContext->VSSetShader(element.second->GetVertexShader().Get(),nullptr,0);
+            m_immediateContext->VSSetShader(element.second->GetVertexShader().Get(), nullptr, 0);
 
-            m_immediateContext->VSSetConstantBuffers(2, 1,element.second->GetConstantBuffer().GetAddressOf());
+            m_immediateContext->VSSetConstantBuffers(2, 1, element.second->GetConstantBuffer().GetAddressOf());
 
-            m_immediateContext->PSSetShader(element.second->GetPixelShader().Get(),nullptr, 0);
+            m_immediateContext->PSSetShader(element.second->GetPixelShader().Get(), nullptr, 0);
 
             m_immediateContext->PSSetShaderResources(0, 1, element.second->GetTextureResourceView().GetAddressOf());
             m_immediateContext->PSSetSamplers(0, 1, element.second->GetSamplerState().GetAddressOf());
@@ -563,7 +549,7 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    HRESULT Renderer::SetVertexShaderOfRenderable(_In_ PCWSTR pszRenderableName, _In_ PCWSTR pszVertexShaderName) 
+    HRESULT Renderer::SetVertexShaderOfRenderable(_In_ PCWSTR pszRenderableName, _In_ PCWSTR pszVertexShaderName)
     {
 
         if (!m_renderables.contains(pszRenderableName)) {
@@ -599,7 +585,7 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    HRESULT Renderer::SetPixelShaderOfRenderable(_In_ PCWSTR pszRenderableName, _In_ PCWSTR pszPixelShaderName) 
+    HRESULT Renderer::SetPixelShaderOfRenderable(_In_ PCWSTR pszRenderableName, _In_ PCWSTR pszPixelShaderName)
     {
 
         if (!m_renderables.contains(pszRenderableName)) {
@@ -628,7 +614,7 @@ namespace library
       Returns:  D3D_DRIVER_TYPE
                   The Direct3D driver type used
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    D3D_DRIVER_TYPE Renderer::GetDriverType() const 
+    D3D_DRIVER_TYPE Renderer::GetDriverType() const
     {
         return m_driverType;
 
