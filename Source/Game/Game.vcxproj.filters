@@ -27,10 +27,16 @@
     <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Light\RotatingPointLight.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="Cube\BaseCube.cpp">
       <Filter>소스 파일\Cubes</Filter>
     </ClCompile>
     <ClCompile Include="Cube\Cube.cpp">
+      <Filter>소스 파일\Cubes</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube\RotatingCube.cpp">
       <Filter>소스 파일\Cubes</Filter>
     </ClCompile>
     <ClCompile Include="Cube\MyCube.cpp">
@@ -49,12 +55,21 @@
     <None Include="Shaders\Shaders.fxh">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
+    <None Include="Shaders\PhongShaders.fxh">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Light\RotatingPointLight.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="Cube\BaseCube.h">
       <Filter>헤더 파일\Cubes</Filter>
     </ClInclude>
     <ClInclude Include="Cube\Cube.h">
+      <Filter>헤더 파일\Cubes</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube\RotatingCube.h">
       <Filter>헤더 파일\Cubes</Filter>
     </ClInclude>
     <ClInclude Include="Cube\MyCube.h">

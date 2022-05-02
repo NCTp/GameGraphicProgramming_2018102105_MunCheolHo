@@ -43,6 +43,12 @@
     <Filter Include="헤더 파일\Camera">
       <UniqueIdentifier>{4aec7567-0fcb-46b3-8b99-03da338094ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Light">
+      <UniqueIdentifier>{11c9f109-7955-4feb-8121-419461127a05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Light">
+      <UniqueIdentifier>{6fd72545-aa9b-4d00-8b3e-b1d4dd55bbae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -84,6 +90,9 @@
     <ClInclude Include="Texture\DDSTextureLoader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Light\PointLight.h">
+      <Filter>헤더 파일\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Game.cpp">
@@ -112,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="Texture\DDSTextureLoader.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Light\PointLight.cpp">
+      <Filter>소스 파일\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

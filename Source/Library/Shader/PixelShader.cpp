@@ -2,85 +2,73 @@
 
 namespace library
 {
-    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-      Method:   PixelShader::PixelShader
+	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+	  Method:   PixelShader::PixelShader
 
-      Summary:  Constructor
+	  Summary:  Constructor
 
-      Args:     PCWSTR pszFileName
-                  Name of the file that contains the shader code
+	  Args:     PCWSTR pszFileName
+				  Name of the file that contains the shader code
+				PCSTR pszEntryPoint
+				  Name of the shader entry point functino where shader
+				  execution begins
+				PCSTR pszShaderModel
+				  Specifies the shader target or set of shader features
+				  to compile against
 
-                PCSTR pszEntryPoint
-                  Name of the shader entry point functino where shader
-                  execution begins
+	  Modifies: [m_pixelShader].
+	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+	PixelShader::PixelShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel) :
+		Shader::Shader(pszFileName, pszEntryPoint, pszShaderModel),
+		m_pixelShader(nullptr)
 
-                PCSTR pszShaderModel
-                  Specifies the shader target or set of shader features
-                  to compile against
+	{};
 
-      Modifies: [m_pixelShader].
-    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: PixelShader::PixelShader definition (remove the comment)
-    --------------------------------------------------------------------*/
-    PixelShader::PixelShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel) :
-        Shader::Shader(pszFileName, pszEntryPoint, pszShaderModel),
-        m_pixelShader(nullptr)
-    {};
+	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+	  Method:   PixelShader::Initialize
 
+	  Summary:  Initializes the pixel shader
 
-    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-      Method:   PixelShader::Initialize
+	  Args:     ID3D11Device* pDevice
+				  The Direct3D device to create the pixel shader
 
-      Summary:  Initializes the pixel shader
+	  Returns:  HRESULT
+				  Status code
+	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+	HRESULT PixelShader::Initialize(ID3D11Device* pDevice)
+	{
+		HRESULT hr = S_OK;
+		ComPtr<ID3DBlob> vs_blob_ptr = nullptr;
 
-      Args:     ID3D11Device* pDevice
-                  The Direct3D device to create the pixel shader
+		hr = compile(vs_blob_ptr.GetAddressOf());
+		if (FAILED(hr))
+		{
+			MessageBox(nullptr,
+				L"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", L"Error", MB_OK);
+			return hr;
+		}
 
-      Returns:  HRESULT
-                  Status code
-    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: PixelShader::Initialize definition (remove the comment)
-    --------------------------------------------------------------------*/
-    HRESULT PixelShader::Initialize(ID3D11Device* pDevice)
-    {
-        HRESULT hr = S_OK;
-        ComPtr<ID3DBlob> vs_blob_ptr = nullptr;
-
-        hr = compile(vs_blob_ptr.GetAddressOf());
-        if (FAILED(hr))
-        {
-            MessageBox(nullptr,
-                L"The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", L"Error", MB_OK);
-            return hr;
-        }
-
-        // Create the pixel shader
-        hr = pDevice->CreatePixelShader(vs_blob_ptr->GetBufferPointer(), vs_blob_ptr->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
-        //pPSBlob->Release();
-        if (FAILED(hr))
-            return hr;
+		// Create the pixel shader
+		hr = pDevice->CreatePixelShader(vs_blob_ptr->GetBufferPointer(), vs_blob_ptr->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
+		//pPSBlob->Release();
+		if (FAILED(hr))
+			return hr;
 
 
-        return S_OK;
-    }
+		return S_OK;
+	}
 
 
-    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-      Method:   PixelShader::GetPixelShader
+	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+	  Method:   PixelShader::GetPixelShader
 
-      Summary:  Returns the pixel shader
+	  Summary:  Returns the pixel shader
 
-      Returns:  ComPtr<ID3D11PixelShader>&
-                  Pixel shader. Could be a nullptr
-    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: PixelShader::GetPixelShader definition (remove the comment)
-    --------------------------------------------------------------------*/
-    ComPtr<ID3D11PixelShader>& PixelShader::GetPixelShader()
-    {
-        return m_pixelShader;
-    }
-
+	  Returns:  ComPtr<ID3D11PixelShader>&
+				  Pixel shader. Could be a nullptr
+	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+	ComPtr<ID3D11PixelShader>& PixelShader::GetPixelShader()
+	{
+		return m_pixelShader;
+	}
 }
