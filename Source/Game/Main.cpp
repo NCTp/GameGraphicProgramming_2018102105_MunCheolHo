@@ -144,10 +144,10 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	{
 		return 0;
 	}
-
+	
 	std::shared_ptr<MyCube> phongCube2 = std::make_shared<MyCube>(L"godricklovesdirectx.dds");
-	phongCube2->Translate(XMVectorSet(0.0f, 3.0f, 0.0f, 0.0f));
-	if (FAILED(game->GetRenderer()->AddRenderable(L"PhongCube2", phongCube)))
+	
+	if (FAILED(game->GetRenderer()->AddRenderable(L"PhongCube2", phongCube2)))
 	{
 		return 0;
 	}
@@ -159,11 +159,11 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	{
 		return 0;
 	}
-
+	
 	if (FAILED(game->Initialize(hInstance, nCmdShow)))
 	{
 		return 0;
 	}
-
+	
 	return game->Run();
 }

@@ -39,5 +39,6 @@ M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 void MyCube::Update(_In_ FLOAT deltaTime)
 {
     XMMATRIX mTranslate = XMMatrixTranslation(0.0f, 3.0f, 0.0f);
+    m_world = mTranslate;
     // Does nothing
 }
