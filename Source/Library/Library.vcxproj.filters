@@ -49,6 +49,12 @@
     <Filter Include="소스 파일\Light">
       <UniqueIdentifier>{6fd72545-aa9b-4d00-8b3e-b1d4dd55bbae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Texture">
+      <UniqueIdentifier>{e6877a64-53fb-471d-8aa0-3ddb6b9f4641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Texture">
+      <UniqueIdentifier>{9f0d078e-e3b0-4e8e-8ceb-d22469016650}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -87,11 +93,20 @@
     <ClInclude Include="Camera\Camera.h">
       <Filter>헤더 파일\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\DDSTextureLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Light\PointLight.h">
       <Filter>헤더 파일\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\DDSTextureLoader.h">
+      <Filter>헤더 파일\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Material.h">
+      <Filter>헤더 파일\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Texture.h">
+      <Filter>헤더 파일\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\WICTextureLoader.h">
+      <Filter>헤더 파일\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +134,20 @@
     <ClCompile Include="Camera\Camera.cpp">
       <Filter>소스 파일\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Texture\DDSTextureLoader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Light\PointLight.cpp">
       <Filter>소스 파일\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\DDSTextureLoader.cpp">
+      <Filter>소스 파일\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Material.cpp">
+      <Filter>소스 파일\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Texture.cpp">
+      <Filter>소스 파일\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\WICTextureLoader.cpp">
+      <Filter>소스 파일\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
