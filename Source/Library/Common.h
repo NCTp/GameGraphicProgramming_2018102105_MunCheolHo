@@ -2,8 +2,8 @@
   File:      COMMON.H
 
   Summary:   Common header file that contains common header files and
-			 macros used for the Library project of Game Graphics
-			 Programming course.
+             macros used for the Library project of Game Graphics
+             Programming course.
 
   Functions:
 
@@ -47,38 +47,36 @@
 
 constexpr LPCWSTR PSZ_COURSE_TITLE = L"Game Graphics Programming";
 
-#ifndef NUM_LIGHTS
-#define NUM_LIGHTS (2)
-#endif
-
 using namespace Microsoft::WRL;
 using namespace DirectX;
 
 namespace library
 {
-	/*S+S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S
-		Struct:   DirectionsInput
+#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_ConvertToLeftHanded)
 
-		Summary:  Data structure that stores keyboard movement data
-	S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S-S*/
-	struct DirectionsInput
-	{
-		BOOL bFront;
-		BOOL bLeft;
-		BOOL bBack;
-		BOOL bRight;
-		BOOL bUp;
-		BOOL bDown;
-	};
+    /*S+S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S
+      Class:    DirectionsInput
 
-	/*S+S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S
-		Struct:   MouseRelativeMovement
+      Summary:  Data structure that stores keyboard movement data
+    S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S-S*/
+    struct DirectionsInput
+    {
+        BOOL bFront;
+        BOOL bLeft;
+        BOOL bBack;
+        BOOL bRight;
+        BOOL bUp;
+        BOOL bDown;
+    };
 
-		Summary:  Data structure that stores mouse relative movement data
-	S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S-S*/
-	struct MouseRelativeMovement
-	{
-		LONG X;
-		LONG Y;
-	};
+    /*S+S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S+++S
+      Class:    MouseRelativeMovement
+
+      Summary:  Data structure that stores mouse relative movement data
+    S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S---S-S*/
+    struct MouseRelativeMovement
+    {
+        LONG X;
+        LONG Y;
+    };
 }
