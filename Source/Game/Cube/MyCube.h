@@ -30,7 +30,7 @@ C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
 class MyCube : public BaseCube
 {
 public:
-    MyCube(_In_ const std::filesystem::path& textureFilePath);
+
     MyCube(_In_ const XMFLOAT4& outputColor);
     MyCube(const MyCube& other) = delete;
     MyCube(MyCube&& other) = delete;

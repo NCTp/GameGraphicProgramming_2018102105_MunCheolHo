@@ -128,14 +128,15 @@ namespace library
     --------------------------------------------------------------------*/
     void Model::countVerticesAndIndices(_Inout_ UINT& uOutNumVertices, _Inout_ UINT& uOutNumIndices, _In_ const aiScene* pScene)
     {
-        m_aMeshes.resize(pScene->mNumMeshes);
-        m_aMaterials.resize(pScene->mNumMaterials);
 
-        UINT uNumVertices = 0;
-        UINT uNumIndices = 0;
 
-        for (int i = 0; i < pScene->mNumMeshes; ++i)
+        UINT uNumVertices = 0, uNumIndices = 0;
+
+        for (UINT i = 0; i < pScene->mNumMeshes; i++)
         {
+            const auto& mesh = pScene->mMeshes[i];
+            uOutNumVertices += mesh->mNumVertices;
+            uOutNumIndices += mesh->mNumFaces * 3u;
 
         }
     }
@@ -207,6 +208,30 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Model::initFromScene definition (remove the comment)
     --------------------------------------------------------------------*/
+    HRESULT Model::initFromScene(
+        _In_ ID3D11Device* pDevice,
+        _In_ ID3D11DeviceContext* pImmediateContext,
+        _In_ const aiScene* pScene,
+        _In_ const std::filesystem::path& filePath)
+    {
+        HRESULT hr;
+        UINT uNumOfVertices = 0, uNumOfIndices = 0;
+        
+        countVerticesAndIndices(uNumOfVertices, uNumOfIndices, pScene);
+        reserveSpace(uNumOfVertices, uNumOfIndices);
+        initAllMeshes(pScene);
+
+        hr = initMaterials(pDevice, pImmediateContext, pScene, filePath);
+        if (FAILED(hr))
+            return hr;
+
+        hr = initialize(pDevice, pImmediateContext);
+        if(FAILED(hr))
+            return hr;
+
+    }
+
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::initMaterials
@@ -243,9 +268,11 @@ namespace library
             const aiMaterial* pMaterial = pScene->mMaterials[i];
 
             loadTextures(pDevice, pImmediateContext, parentDirectory, pMaterial, i);
+
         }
 
         return hr;
+
     }
 
 
@@ -260,6 +287,54 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Model::initSingleMesh definition (remove the comment)
     --------------------------------------------------------------------*/
+    void Model::initSingleMesh(_In_ const aiMesh* pMesh)
+    {
+        
+        
+        BasicMeshEntry newEntry;
+
+        newEntry.uNumIndices = 0;
+        newEntry.uBaseVertex = static_cast<UINT>(m_aVertices.size());
+        newEntry.uBaseIndex = static_cast<UINT>(m_aIndices.size());
+        newEntry.uMaterialIndex = pMesh->mMaterialIndex;
+
+        for (UINT i = 0u; i < pMesh->mNumVertices; i++) 
+        {
+            const aiVector3D& position = pMesh->mVertices[i];
+            const aiVector3D& normal = pMesh->mNormals[i];
+            const auto& texCoord = pMesh->mTextureCoords[0][i];
+
+            SimpleVertex vertex = 
+            {
+                .Position = XMFLOAT3(position.x, position.y, position.z),
+                .TexCoord = XMFLOAT2(texCoord.x, texCoord.y),
+                .Normal = XMFLOAT3(normal.x, normal.y, normal.z)
+
+            };
+            
+            if (!pMesh->HasTextureCoords(0u))
+                vertex.TexCoord = XMFLOAT2(0.0f, 0.0f);
+
+            m_aVertices.push_back(vertex);
+
+        }
+
+        for (UINT i = 0; i < pMesh->mNumFaces; i++)
+        {
+            const aiFace& face = pMesh->mFaces[i];
+            assert(face.mNumIndices == 3u);
+
+            for (int j = 0; j < 3; j++)
+            {
+                m_aIndices.push_back(static_cast<WORD>(face.mIndices[j]));
+                newEntry.uNumIndices++;
+
+            }
+        }
+
+        m_aMeshes.push_back(newEntry);
+
+    }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::loadDiffuseTexture
@@ -439,4 +514,11 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Model::reserveSpace definition (remove the comment)
     --------------------------------------------------------------------*/
+    void Model::reserveSpace(_In_ UINT uNumVertices, _In_ UINT uNumIndices)
+    {
+        m_aVertices.reserve(uNumVertices);
+        m_aIndices.reserve(uNumIndices);
+
+    }
+
 }

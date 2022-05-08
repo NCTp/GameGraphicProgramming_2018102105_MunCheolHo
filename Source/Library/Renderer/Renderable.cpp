@@ -90,8 +90,9 @@ namespace library
 		hr = pDevice->CreateBuffer(&bd, &InitData, m_indexBuffer.GetAddressOf());
 		if (FAILED(hr))
 			return hr;
-
+		
 		// Create the constant buffer
+		
 		D3D11_BUFFER_DESC cBufferDesc = {
 			.ByteWidth = sizeof(CBChangesEveryFrame),
 			.Usage = D3D11_USAGE_DEFAULT,
