@@ -25,12 +25,15 @@ namespace library
 		m_vertexBuffer(),
 		m_indexBuffer(),
 		m_constantBuffer(),
+		m_aMeshes(std::vector<BasicMeshEntry>()),
+		m_aMaterials(std::vector<Material>()),
 		m_vertexShader(),
 		m_pixelShader(),
 		m_outputColor(),
+		m_padding(),
 		m_world(XMMatrixIdentity())
 
-	{}
+	{};
 
 	
 
@@ -99,12 +102,12 @@ namespace library
 		};
 
 
-
+		
 		CBChangesEveryFrame cb = {
 			.World = XMMatrixTranspose(m_world),
-			.OutputColor = m_outputColor
+			//.OutputColor = m_outputColor
 		};
-
+		
 		D3D11_SUBRESOURCE_DATA cData = {
 			.pSysMem = &cb,
 			.SysMemPitch = 0,
@@ -114,7 +117,7 @@ namespace library
 		hr = pDevice->CreateBuffer(&cBufferDesc, &cData, &m_constantBuffer);
 		if (FAILED(hr)) return hr;
 
-		
+		/*
 		if (m_bHasTextures)
 		{
 			// Create texture resource device
@@ -140,7 +143,7 @@ namespace library
 			if (FAILED(hr)) return hr;
 		}
 
-
+		*/
 		return hr;
 
 	}
@@ -292,20 +295,26 @@ namespace library
 		return m_outputColor;
 
 	}
+	/*M + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M++ + M
+	Method : Renderable::HasTexture
 
-	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-	  Method:   Renderable::HasTexture
+	Summary : Returns whether the renderable has texture
 
-	  Summary:  Returns whether the renderable has texture
-
-	  Returns:  BOOL
-				  Whether the renderable has texture
-	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+	Returns : BOOL
+	Whether the renderable has texture
+	M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M-- - M - M * /
+	/*--------------------------------------------------------------------
+		 TODO: Renderable::HasTexture definition (remove the comment)
+	--------------------------------------------------------------------*/
 	BOOL Renderable::HasTexture() const
 	{
-		return m_bHasTextures;
+		if (m_aMaterials.size() > 0)
+			return true;
+		else
+			return false;
 
 	}
+
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Renderable::GetMaterial

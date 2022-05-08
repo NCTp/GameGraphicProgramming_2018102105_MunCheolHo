@@ -578,19 +578,39 @@ namespace library {
 			m_immediateContext->VSSetConstantBuffers(2, 1, renderable->GetConstantBuffer().GetAddressOf());
 			m_immediateContext->PSSetConstantBuffers(2, 1, renderable->GetConstantBuffer().GetAddressOf());
 
+			
+
 			if (renderable->HasTexture())
 			{
-				// Set texture resource view of the renderable into the pixel shader
-				m_immediateContext->PSSetShaderResources(0, 1, renderable->GetTextureResourceView().GetAddressOf());
+				for (UINT i = 0; i < renderable->GetNumMeshes(); ++i) {
 
-				// Set sampler state of the renderable into the pixel shader
-				m_immediateContext->PSSetSamplers(0, 1, renderable->GetSamplerState().GetAddressOf());
+					const UINT materiaIdx = renderable->GetMesh(i).uMaterialIndex;
+					if (renderable->GetMaterial(renderable->GetMesh(i).uMaterialIndex).pDiffuse)
+					{
+						// Set texture resource view of the renderable into the pixel shader
+						m_immediateContext->PSSetShaderResources(0, 1, renderable->GetMaterial(renderable->GetMesh(i).uMaterialIndex).pDiffuse->GetTextureResourceView().GetAddressOf());
+
+						// Set sampler state of the renderable into the pixel shader
+						m_immediateContext->PSSetSamplers(0, 1, renderable->GetMaterial(renderable->GetMesh(i).uMaterialIndex).pDiffuse->GetSamplerState().GetAddressOf());
+
+					}
+
+					m_immediateContext->DrawIndexed(
+						renderable->GetMesh(renderable->GetMesh(i).uMaterialIndex).uNumIndices,
+						renderable->GetMesh(renderable->GetMesh(i).uMaterialIndex).uBaseIndex,
+						renderable->GetMesh(renderable->GetMesh(i).uMaterialIndex).uBaseVertex
+					
+					);
+				}
+				
+			}
+			else {
+				// Render
+				m_immediateContext->DrawIndexed(renderable->GetNumIndices(), 0, 0);
+
 			}
 
-			// Render
-			m_immediateContext->DrawIndexed(renderable->GetNumIndices(), 0, 0);
 		}
-
 		// Present
 		m_swapChain->Present(0, 0);
 
