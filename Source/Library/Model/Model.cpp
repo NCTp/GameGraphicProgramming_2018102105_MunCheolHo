@@ -19,7 +19,14 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Model::Model definition (remove the comment)
     --------------------------------------------------------------------*/
+    Model::Model(_In_ const std::filesystem::path& filePath) :
+        Renderable(XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)),
+        m_filePath(filePath),
+        m_aVertices(),
+        m_aIndices(),
+        m_padding()
 
+    {};
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::Initialize
 
@@ -119,6 +126,21 @@ namespace library
     /*--------------------------------------------------------------------
       TODO: Model::countVerticesAndIndices definition (remove the comment)
     --------------------------------------------------------------------*/
+    void Model::countVerticesAndIndices(_Inout_ UINT& uOutNumVertices, _Inout_ UINT& uOutNumIndices, _In_ const aiScene* pScene)
+    {
+        m_aMeshes.resize(pScene->mNumMeshes);
+        m_aMaterials.resize(pScene->mNumMaterials);
+
+        UINT uNumVertices = 0;
+        UINT uNumIndices = 0;
+
+        for (int i = 0; i < pScene->mNumMeshes; ++i)
+        {
+
+        }
+    }
+
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::getVertices
