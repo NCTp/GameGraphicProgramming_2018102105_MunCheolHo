@@ -53,6 +53,7 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     std::unique_ptr<library::Game> game = std::make_unique<library::Game>(L"Game Graphics Programming Lab 07: Modeling");
 
+
     // Light Cube
     std::shared_ptr<library::VertexShader> lightVertexShader = std::make_shared<library::VertexShader>(L"Shaders/PhongShaders.fxh", "VSLightCube", "vs_5_0");
     if (FAILED(game->GetRenderer()->AddVertexShader(L"LightShader", lightVertexShader)))
@@ -67,9 +68,34 @@ INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         return 0;
     }
 
-    /*--------------------------------------------------------------------
-      TODO: Add a model and its vertex/pixel shader (remove the comment)
-    --------------------------------------------------------------------*/
+    // Phong
+    std::shared_ptr<library::VertexShader> phongVertexShader = std::make_shared<library::VertexShader>(L"Shaders/PhongShaders.fxh", "VSPhong", "vs_5_0");
+    if (FAILED(game->GetRenderer()->AddVertexShader(L"PhongShader", phongVertexShader)))
+    {
+        return 0;
+    }
+
+    // Phong
+    std::shared_ptr<library::PixelShader> phongPixelShader = std::make_shared<library::PixelShader>(L"Shaders/PhongShaders.fxh", "PSPhong", "ps_5_0");
+    if (FAILED(game->GetRenderer()->AddPixelShader(L"PhongShader", phongPixelShader)))
+    {
+        return 0;
+    }
+
+    std::shared_ptr<library::Model> nanosuit = std::make_shared<library::Model>(L"nanosuit/nanosuit.obj");
+    if (FAILED(game->GetRenderer()->AddRenderable(L"Nanosuit", nanosuit)))
+    {
+        return 0;
+    }
+    if (FAILED(game->GetRenderer()->SetVertexShaderOfRenderable(L"Nanosuit", L"PhongShader")))
+    {
+        return 0;
+    }
+    if (FAILED(game->GetRenderer()->SetPixelShaderOfRenderable(L"Nanosuit", L"PhongShader")))
+    {
+        return 0;
+    }
+
 
     XMFLOAT4 color;
     XMStoreFloat4(&color, Colors::White);

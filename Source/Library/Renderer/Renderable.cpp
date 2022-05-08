@@ -29,7 +29,7 @@ namespace library
 		m_aMaterials(std::vector<Material>()),
 		m_vertexShader(),
 		m_pixelShader(),
-		m_outputColor(),
+		m_outputColor(outputColor),
 		m_padding(),
 		m_world(XMMatrixIdentity())
 
@@ -80,16 +80,23 @@ namespace library
 			return hr;
 
 		// Create the index buffer
-		bd.ByteWidth = sizeof(SimpleVertex) * GetNumIndices();
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		bd.CPUAccessFlags = 0;
+		D3D11_BUFFER_DESC iBufferDesc = 
+		{
+			.ByteWidth = static_cast<UINT>(sizeof(WORD)) * GetNumIndices(),
+			.Usage = D3D11_USAGE_DEFAULT,
+			.BindFlags = D3D11_BIND_INDEX_BUFFER,
+			.CPUAccessFlags = 0,
 
-		InitData.pSysMem = getIndices();
+		};
 
-		hr = pDevice->CreateBuffer(&bd, &InitData, m_indexBuffer.GetAddressOf());
-		if (FAILED(hr))
-			return hr;
+		D3D11_SUBRESOURCE_DATA iData = 
+		{
+			.pSysMem = getIndices(),
+
+		};
+
+		hr = pDevice->CreateBuffer(&iBufferDesc, &iData, &m_indexBuffer);
+		if (FAILED(hr)) return hr;
 		
 		// Create the constant buffer
 		

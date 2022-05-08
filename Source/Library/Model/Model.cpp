@@ -129,10 +129,10 @@ namespace library
     void Model::countVerticesAndIndices(_Inout_ UINT& uOutNumVertices, _Inout_ UINT& uOutNumIndices, _In_ const aiScene* pScene)
     {
 
+        uOutNumVertices = 0u;
+        uOutNumIndices = 0u;
 
-        UINT uNumVertices = 0, uNumIndices = 0;
-
-        for (UINT i = 0; i < pScene->mNumMeshes; i++)
+        for (UINT i = 0u; i < pScene->mNumMeshes; i++)
         {
             const auto& mesh = pScene->mMeshes[i];
             uOutNumVertices += mesh->mNumVertices;
@@ -170,17 +170,9 @@ namespace library
     }
 
 
-    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-      Method:   Model::getIndices
-
-      Summary:  Initialize all meshes in a given assimp scene
-
-      Args:     const aiScene* pScene
-                  Assimp scene
-    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
     void Model::initAllMeshes(_In_ const aiScene* pScene)
     {
-        for (UINT i = 0u; i < m_aMeshes.size(); ++i)
+        for (UINT i = 0u; i < pScene->mNumMeshes; ++i)
         {
             const aiMesh* pMesh = pScene->mMeshes[i];
             initSingleMesh(pMesh);
@@ -266,7 +258,7 @@ namespace library
         for (UINT i = 0u; i < pScene->mNumMaterials; ++i)
         {
             const aiMaterial* pMaterial = pScene->mMaterials[i];
-
+            m_aMaterials.push_back(Material());
             loadTextures(pDevice, pImmediateContext, parentDirectory, pMaterial, i);
 
         }
@@ -298,8 +290,9 @@ namespace library
         newEntry.uBaseIndex = static_cast<UINT>(m_aIndices.size());
         newEntry.uMaterialIndex = pMesh->mMaterialIndex;
 
-        for (UINT i = 0u; i < pMesh->mNumVertices; i++) 
+        for (UINT i = 0u; i < pMesh->mNumVertices; ++i) 
         {
+
             const aiVector3D& position = pMesh->mVertices[i];
             const aiVector3D& normal = pMesh->mNormals[i];
             const auto& texCoord = pMesh->mTextureCoords[0][i];
