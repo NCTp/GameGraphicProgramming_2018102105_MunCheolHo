@@ -596,10 +596,10 @@ namespace library {
 					}
 
 					m_immediateContext->DrawIndexed(
-						renderable->GetMesh(materiaIndex).uNumIndices,
-						renderable->GetMesh(materiaIndex).uBaseIndex,
-						renderable->GetMesh(materiaIndex).uBaseVertex
-					
+						renderable->GetMesh(i).uNumIndices,
+						renderable->GetMesh(i).uBaseIndex,
+						renderable->GetMesh(i).uBaseVertex
+
 					);
 				}
 				
