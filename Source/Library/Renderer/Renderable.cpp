@@ -22,13 +22,13 @@ namespace library
 	--------------------------------------------------------------------*/
 	Renderable::Renderable(_In_ const XMFLOAT4& outputColor) :
 
-		m_vertexBuffer(),
-		m_indexBuffer(),
-		m_constantBuffer(),
+		m_vertexBuffer(nullptr),
+		m_indexBuffer(nullptr),
+		m_constantBuffer(nullptr),
 		m_aMeshes(std::vector<BasicMeshEntry>()),
 		m_aMaterials(std::vector<Material>()),
-		m_vertexShader(),
-		m_pixelShader(),
+		m_vertexShader(nullptr),
+		m_pixelShader(nullptr),
 		m_outputColor(outputColor),
 		m_padding(),
 		m_world(XMMatrixIdentity())

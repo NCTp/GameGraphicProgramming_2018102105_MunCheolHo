@@ -29,4 +29,5 @@ void RotatingPointLight::Update(_In_ FLOAT deltaTime)
     XMVECTOR position = XMLoadFloat4(&m_position);
     position = XMVector3Transform(position, rotate);
     XMStoreFloat4(&m_position, position);
+
 }

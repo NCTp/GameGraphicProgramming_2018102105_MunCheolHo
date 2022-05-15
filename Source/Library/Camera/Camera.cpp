@@ -20,7 +20,7 @@ namespace library
         m_moveBackForward(0.0f),
         m_moveUpDown(0.0f),
         m_travelSpeed(10.0f),
-        m_rotationSpeed(18.0f),
+        m_rotationSpeed(5.0f),
         m_padding(),
         m_cameraForward(DEFAULT_FORWARD),
         m_cameraRight(DEFAULT_RIGHT),
@@ -140,8 +140,8 @@ namespace library
             m_moveBackForward -= m_travelSpeed * deltaTime;
 
         // Handle Mouse Rotation
-        m_yaw += static_cast<FLOAT>(mouseRelativeMovement.X * m_rotationSpeed * deltaTime);
-        m_pitch += static_cast<FLOAT>(mouseRelativeMovement.Y * m_rotationSpeed * deltaTime);
+        m_yaw += static_cast<FLOAT>(mouseRelativeMovement.X * m_rotationSpeed * deltaTime / 2);
+        m_pitch += static_cast<FLOAT>(mouseRelativeMovement.Y * m_rotationSpeed * deltaTime / 2);
 
         // Camera Rotation Range
         if (m_pitch < -XM_PIDIV2)
